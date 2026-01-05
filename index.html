@@ -29,7 +29,6 @@
             margin-bottom: 30px;
         }
 
-        /* Boy Doll Animation */
         .doll-container {
             font-size: 80px;
             animation: bounce 2s infinite ease-in-out;
@@ -44,7 +43,6 @@
         h1 { color: var(--accent); margin: 5px 0; }
         .made-by { font-style: italic; opacity: 0.8; margin-bottom: 20px; }
 
-        /* Shayari Grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -53,7 +51,6 @@
             max-width: 800px;
         }
 
-        /* Card Styling */
         .card {
             background: var(--card-bg);
             border: 2px solid #333;
@@ -84,7 +81,6 @@
             font-weight: bold;
         }
 
-        /* Blast Animation Effect */
         .blast {
             animation: blastEffect 0.5s forwards;
         }
@@ -104,6 +100,11 @@
 </head>
 <body>
 
+    <!-- 🎵 BACKGROUND SONG -->
+    <audio autoplay loop>
+        <source src="birthday.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="doll-container">👦🏻</div>
     <header>
         <h1>For Nisha Khan ✨</h1>
@@ -111,8 +112,7 @@
         <p>Click the boxes to reveal surprises 🎁</p>
     </header>
 
-    <div class="grid" id="shayariGrid">
-        </div>
+    <div class="grid" id="shayariGrid"></div>
 
     <script>
         const shayaris = [
@@ -142,55 +142,23 @@
         const emojis = ["🌟", "✨", "🔥", "💎", "🌸", "🦋", "🎈", "🍫"];
         const grid = document.getElementById('shayariGrid');
 
-        shayaris.forEach((text, index) => {
+        shayaris.forEach((text) => {
             const card = document.createElement('div');
             card.className = 'card';
-            
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            card.innerHTML = `
-                <div class="cover">${randomEmoji}</div>
-                <div class="content">${text}</div>
-            `;
+            card.innerHTML = `<div class="cover">${randomEmoji}</div><div class="content">${text}</div>`;
 
-            card.onclick = function() {
+            card.onclick = function(event) {
                 const cover = this.querySelector('.cover');
                 const content = this.querySelector('.content');
-                
                 if (content.style.display !== 'block') {
                     cover.style.display = 'none';
                     content.style.display = 'block';
                     content.classList.add('blast');
-                    createEmojiBlast(event);
                 }
             };
-
             grid.appendChild(card);
         });
-
-        function createEmojiBlast(e) {
-            for (let i = 0; i < 10; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'emoji-float';
-                particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                particle.style.left = e.clientX + 'px';
-                particle.style.top = e.clientY + 'px';
-                particle.style.fontSize = '20px';
-                
-                document.body.appendChild(particle);
-
-                const destinationX = (Math.random() - 0.5) * 300;
-                const destinationY = (Math.random() - 0.5) * 300;
-
-                particle.animate([
-                    { transform: 'translate(0, 0) opacity(1)' },
-                    { transform: `translate(${destinationX}px, ${destinationY}px) opacity(0)` }
-                ], {
-                    duration: 1000,
-                    easing: 'ease-out'
-                }).onfinish = () => particle.remove();
-            }
-        }
     </script>
 </body>
 </html>
