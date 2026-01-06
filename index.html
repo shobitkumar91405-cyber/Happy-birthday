@@ -25,13 +25,61 @@ padding:20px;
 overflow-x:hidden;
 }
 
-header{text-align:center;margin-bottom:20px}
-
-.doll-container{
-font-size:80px;
-animation:bounce 2s infinite;
+/* 🌧️ RAIN */
+.rain{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+background-image:
+linear-gradient(transparent 90%, rgba(255,255,255,.3) 100%);
+background-size:2px 20px;
+animation:rain 0.3s linear infinite;
+opacity:.4;
+z-index:9998;
 }
 
+@keyframes rain{
+from{background-position:0 0}
+to{background-position:0 20px}
+}
+
+/* ⚡ LIGHTNING */
+.lightning{
+position:fixed;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:9999;
+animation:flash .3s ease;
+}
+
+@keyframes flash{
+0%{opacity:0}
+30%{opacity:.9}
+100%{opacity:0}
+}
+
+/* 🌈 COLOR LIGHT */
+.light{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:9997;
+animation:lightFlash .6s forwards;
+}
+
+@keyframes lightFlash{
+0%{opacity:0}
+40%{opacity:.8}
+100%{opacity:0}
+}
+
+/* UI */
+header{text-align:center;margin-bottom:20px}
+.doll-container{font-size:80px;animation:bounce 2s infinite}
 @keyframes bounce{
 0%,100%{transform:translateY(0)}
 50%{transform:translateY(-20px)}
@@ -40,23 +88,14 @@ animation:bounce 2s infinite;
 h1{color:var(--accent)}
 .made-by{opacity:.8;font-style:italic}
 
-/* PHOTO */
-.photo-box{
-margin:20px;
-cursor:pointer;
-text-align:center;
-}
-
+.photo-box{margin:20px;cursor:pointer;text-align:center}
 .photo-box img{
-width:90%;
-max-width:320px;
+width:90%;max-width:320px;
 border-radius:20px;
 border:3px solid var(--accent);
 box-shadow:0 0 20px rgba(255,71,87,.5);
 transition:.3s;
 }
-
-.photo-box img:hover{transform:scale(1.05)}
 
 .grid{
 display:grid;
@@ -81,7 +120,6 @@ overflow:hidden;
 }
 
 .card:hover{transform:scale(1.05);border-color:var(--accent)}
-
 .cover{font-size:40px}
 .content{display:none;font-size:14px;font-weight:bold}
 
@@ -91,27 +129,12 @@ overflow:hidden;
 60%{transform:scale(1.2)}
 100%{transform:scale(1);opacity:1}
 }
-
-/* 🌈 FULL SCREEN LIGHT EFFECT */
-.light{
-position:fixed;
-inset:0;
-pointer-events:none;
-z-index:9999;
-animation:lightFlash .6s ease-out forwards;
-}
-
-@keyframes lightFlash{
-0%{opacity:0}
-30%{opacity:.8}
-100%{opacity:0}
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 SONG -->
+<!-- 🎵 MUSIC -->
 <audio id="bgMusic" loop>
 <source src="newsong.mp3" type="audio/mpeg">
 </audio>
@@ -125,12 +148,12 @@ animation:lightFlash .6s ease-out forwards;
 </header>
 
 <!-- 📸 PHOTO -->
-<div class="photo-box" onclick="nextPhoto();lightEffect();">
+<div class="photo-box" onclick="nextPhoto();colorLight();">
 <img id="photo" src="photo1.jpg">
 <p>Click photo 📸</p>
 </div>
 
-<!-- 💌 SHAYARI GRID -->
+<!-- 💌 CARDS -->
 <div class="grid" id="shayariGrid"></div>
 
 <script>
@@ -138,30 +161,41 @@ animation:lightFlash .6s ease-out forwards;
 const music=document.getElementById("bgMusic");
 document.addEventListener("click",()=>music.play().catch(()=>{}));
 
-/* 📸 PHOTO SYSTEM */
+/* 📸 PHOTO */
 let p=1;
 function nextPhoto(){
 p++; if(p>10) p=1;
 document.getElementById("photo").src=`photo${p}.jpg`;
 }
 
-/* 🌈 LIGHT EFFECT FUNCTION */
-function lightEffect(){
-const colors=[
-"radial-gradient(circle, rgba(255,71,87,.8), transparent)",
-"radial-gradient(circle, rgba(255,215,0,.8), transparent)",
-"radial-gradient(circle, rgba(0,255,255,.8), transparent)",
-"radial-gradient(circle, rgba(138,43,226,.8), transparent)",
-"radial-gradient(circle, rgba(0,255,127,.8), transparent)"
-];
-const l=document.createElement("div");
-l.className="light";
-l.style.background=colors[Math.floor(Math.random()*colors.length)];
-document.body.appendChild(l);
-setTimeout(()=>l.remove(),600);
+/* 🌈 COLOR LIGHT */
+function colorLight(){
+const c=document.createElement("div");
+c.className="light";
+c.style.background=`radial-gradient(circle,
+rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},.8),
+transparent)`;
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),600);
 }
 
-/* 💖 SHAYARIS (UNCHANGED) */
+/* 🌧️⚡ RAIN + LIGHTNING */
+function rainLightning(){
+const rain=document.createElement("div");
+rain.className="rain";
+document.body.appendChild(rain);
+
+setTimeout(()=>{
+const l=document.createElement("div");
+l.className="lightning";
+document.body.appendChild(l);
+setTimeout(()=>l.remove(),300);
+},200);
+
+setTimeout(()=>rain.remove(),1200);
+}
+
+/* SHAYARIS (UNCHANGED) */
 const shayaris=[
 "Zindagi ke safar mein tera sath chahiye, tanhaiyon mein tera hath chahiye.",
 "Phoolon ki mehak bhi fiki lagti hai, jab Pallavi teri muskurahat dikhti hai.",
@@ -195,7 +229,8 @@ c.className="card";
 c.innerHTML=`<div class="cover">${emojis[Math.floor(Math.random()*emojis.length)]}</div>
 <div class="content">${t}</div>`;
 c.onclick=()=>{
-lightEffect();
+rainLightning();
+colorLight();
 c.querySelector(".cover").style.display="none";
 const ct=c.querySelector(".content");
 ct.style.display="block";
