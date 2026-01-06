@@ -6,224 +6,181 @@
 <title>For Pallavi 😍 - By SivaSingh</title>
 
 <style>
-:root{
---bg:#0b0e14;
---card:#1a1f29;
---text:#e0e0e0;
---accent:#ff4757;
-}
 body{
-background:var(--bg);
-color:var(--text);
-font-family:'Segoe UI',sans-serif;
 margin:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:20px;
+background:#0b0e14;
+color:#fff;
+font-family:'Segoe UI',sans-serif;
 overflow-x:hidden;
+text-align:center;
 }
 
-/* 🌧️ RAIN */
-.rain{
-position:fixed;inset:0;
-background-image:linear-gradient(transparent 85%,rgba(255,255,255,.4));
-background-size:2px 20px;
-animation:rain .25s linear infinite;
-pointer-events:none;
-z-index:9996;
-}
-@keyframes rain{to{background-position:0 20px}}
-
-/* ⚡ LIGHTNING */
-.lightning{
-position:fixed;inset:0;
-background:white;
-opacity:0;
-animation:flash .3s;
-pointer-events:none;
+/* INTRO */
+#intro{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
 z-index:9999;
-}
-@keyframes flash{
-0%{opacity:0}
-30%{opacity:.9}
-100%{opacity:0}
+flex-direction:column;
+animation:fadeout 1s forwards;
+animation-delay:4s;
 }
 
-/* ❤️ HEARTS */
+#intro h1{
+font-size:40px;
+color:#ff4757;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes fadeout{
+to{opacity:0;visibility:hidden}
+}
+@keyframes pulse{
+50%{transform:scale(1.1)}
+}
+
+/* HEARTS */
 .heart{
 position:fixed;
+color:red;
 font-size:20px;
-animation:heart 1.5s forwards;
-pointer-events:none;
-z-index:9998;
+animation:float 3s linear forwards;
 }
-@keyframes heart{
-0%{opacity:1}
-100%{opacity:0;transform:translateY(-150px) scale(2)}
+@keyframes float{
+to{transform:translateY(-200px);opacity:0}
 }
 
-/* 💡 BULBS */
-.bulb{
-position:fixed;
-width:15px;height:15px;
-border-radius:50%;
-box-shadow:0 0 20px currentColor;
-animation:bulb .8s forwards;
-pointer-events:none;
-z-index:9997;
-}
-@keyframes bulb{
-0%{opacity:0}
-50%{opacity:1}
-100%{opacity:0}
-}
+/* SECTIONS */
+section{padding:30px 15px}
 
-header{text-align:center}
-.doll-container{font-size:80px;animation:bounce 2s infinite}
-@keyframes bounce{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-20px)}
+/* VIDEO CARDS */
+.videos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+max-width:800px;
+margin:auto;
 }
-h1{color:var(--accent)}
-.made-by{opacity:.8;font-style:italic}
+.vcard{
+background:#1a1f29;
+border-radius:20px;
+padding:20px;
+cursor:pointer;
+font-size:40px;
+}
 
 /* PHOTO */
-.photo-box{margin:20px;text-align:center;cursor:pointer}
-.photo-box img{
-width:90%;max-width:320px;
+.photo img{
+width:90%;
+max-width:320px;
 border-radius:20px;
-border:3px solid var(--accent);
-box-shadow:0 0 20px rgba(255,71,87,.6);
+border:3px solid #ff4757;
 }
 
-/* GRID */
+/* SHAYARI */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:15px;
-width:100%;
 max-width:900px;
+margin:auto;
 }
-
-/* CARD */
 .card{
-background:var(--card);
-border:2px solid #333;
+background:#1a1f29;
 border-radius:15px;
-height:140px;
+padding:20px;
+cursor:pointer;
+}
+.cover{font-size:30px}
+.content{display:none;font-size:14px}
+
+/* VIDEO POPUP */
+.popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
 display:flex;
 align-items:center;
 justify-content:center;
-cursor:pointer;
-padding:10px;
-text-align:center;
-overflow:hidden;
-transition:.3s;
+z-index:999;
 }
-.card:hover{transform:scale(1.05);border-color:var(--accent)}
-.cover{font-size:40px}
-.content{display:none;font-size:14px;font-weight:bold}
-
-.blast{animation:blast .5s}
-@keyframes blast{
-0%{transform:scale(.5);opacity:0}
-60%{transform:scale(1.2)}
-100%{transform:scale(1);opacity:1}
-}
-
-video{width:100%;border-radius:12px}
+video{max-width:90%;border-radius:20px}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 SONG -->
+<!-- INTRO -->
+<div id="intro">
+<h1>❤️ I Love You Pallavi 😍 ❤️</h1>
+</div>
+
 <audio id="bgMusic" loop>
 <source src="newsong.mp3" type="audio/mpeg">
 </audio>
 
-<div class="doll-container">👦🏻</div>
-
-<header>
-<h1>For Pallavi 😍</h1>
-<p class="made-by">Made with ❤️ by SivaSingh</p>
-<p>Photo = Song 🎵 | ❤️ Card = Video 🎥</p>
-</header>
-
-<!-- 📸 PHOTO -->
-<div class="photo-box" onclick="photoClick(event)">
-<img id="photo" src="photo1.jpg">
-<p>Tap photo 📸</p>
+<!-- VIDEOS -->
+<section>
+<h2>❤️ Special Moments</h2>
+<div class="videos">
+<div class="vcard" onclick="playVideo(1)">❤️</div>
+<div class="vcard" onclick="playVideo(2)">❤️</div>
+<div class="vcard" onclick="playVideo(3)">❤️</div>
+<div class="vcard" onclick="playVideo(4)">❤️</div>
 </div>
+</section>
 
-<div class="grid" id="grid"></div>
+<!-- PHOTO -->
+<section class="photo">
+<h2>📸 Memories</h2>
+<img id="photo" src="photo1.jpg" onclick="nextPhoto()">
+</section>
+
+<!-- SHAYARI -->
+<section>
+<h2>💌 Shayari For You</h2>
+<div class="grid" id="shayariGrid"></div>
+</section>
 
 <script>
 const music=document.getElementById("bgMusic");
 
-/* EFFECTS */
-function effects(e){
-const r=document.createElement("div");
-r.className="rain";document.body.appendChild(r);
-setTimeout(()=>r.remove(),1200);
-
-const l=document.createElement("div");
-l.className="lightning";document.body.appendChild(l);
-setTimeout(()=>l.remove(),300);
-
-for(let i=0;i<30;i++){
-const h=document.createElement("div");
-h.className="heart";h.innerHTML="❤️";
-h.style.left=e.clientX+"px";
-h.style.top=e.clientY+"px";
+/* HEART EFFECT */
+function hearts(){
+for(let i=0;i<15;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+h.style.bottom="0";
 document.body.appendChild(h);
-setTimeout(()=>h.remove(),1500);
+setTimeout(()=>h.remove(),3000);
 }
+}
+setInterval(hearts,800);
 
-for(let i=0;i<25;i++){
-const b=document.createElement("div");
-b.className="bulb";
-b.style.left=Math.random()*100+"vw";
-b.style.top=Math.random()*100+"vh";
-b.style.color=`hsl(${Math.random()*360},100%,60%)`;
-document.body.appendChild(b);
-setTimeout(()=>b.remove(),800);
-}
-}
-
-/* PHOTO SYSTEM */
-let p=1;
-function photoClick(e){
-music.play().catch(()=>{});
-p++; if(p>10) p=1;
-photo.src=`photo${p}.jpg`;
-effects(e);
-}
-
-/* ❤️ VIDEO CARD */
-const grid=document.getElementById("grid");
-const videoCard=document.createElement("div");
-videoCard.className="card";
-videoCard.innerHTML=`
-<div class="cover">❤️</div>
-<div class="content">
-<video controls>
-<source src="video1.mp4" type="video/mp4">
-</video>
-</div>`;
-videoCard.onclick=e=>{
+/* VIDEO */
+function playVideo(n){
 music.pause();
-effects(e);
-videoCard.querySelector(".cover").style.display="none";
-const c=videoCard.querySelector(".content");
-c.style.display="block";
-c.classList.add("blast");
-c.querySelector("video").play();
-};
-grid.appendChild(videoCard);
+const p=document.createElement("div");
+p.className="popup";
+p.innerHTML=`<video src="video${n}.mp4" controls autoplay></video>`;
+p.onclick=()=>p.remove();
+document.body.appendChild(p);
+}
 
-/* 💌 ALL SHAYARI – FULL */
+/* PHOTO */
+let pno=1;
+function nextPhoto(){
+pno++; if(pno>10)pno=1;
+document.getElementById("photo").src=`photo${pno}.jpg`;
+hearts();
+}
+
+/* SHAYARI – SAME AS BEFORE */
 const shayaris=[
 "Zindagi ke safar mein tera sath chahiye, tanhaiyon mein tera hath chahiye.",
 "Phoolon ki mehak bhi fiki lagti hai, jab Pallavi teri muskurahat dikhti hai.",
@@ -236,31 +193,20 @@ const shayaris=[
 "Teri dosti ka nasha hai, har dard ki yahi dawa hai.",
 "Suraj ki pehli kiran ho tum, mere liye sabse khas ho tum.",
 "Bas tum haste raho, yahi dua hai meri har pal.",
-"Duniya ki har khushi Pallavi ke naam ho, tera har din ek naya paigam ho.",
-"Dil ke rishte kabhi toote nahi karte, sachi dost kabhi rootha nahi karte.",
-"Aapki muskurahat sabse haseen hai, aap jaisa koi aur nahi hai.",
-"Zindagi mein aaye ho aise, jaise koi dua qubool hui ho.",
-"Khushboo ki tarah mehko tum sada, dosti ka yahi hai asli maza.",
-"Har pal tumhein yaad karte hain, tumhari dosti pe naaz karte hain.",
-"Pallavi, tum meri dosti ka maan ho, is dil ki tum hi shaan ho.",
-"Rabb se bas yahi maangte hain, ki tum hamesha salamat raho.",
-"Dosti ka safar yunhi chalta rahe, waqt badle par hum na badlein.",
-"SivaSingh ki taraf se dosti ka uphar, hamesha rahe tumse pyaar aur dular ❤️"
+"Duniya ki har khushi Pallavi ke naam ho.",
+"SivaSingh ki taraf se dosti ka uphar ❤️"
 ];
 
-const emojis=["🌟","✨","🔥","💎","🌸","🦋","🎈","🍫"];
-
+const grid=document.getElementById("shayariGrid");
 shayaris.forEach(t=>{
-const c=document.createElement("div");
+let c=document.createElement("div");
 c.className="card";
-c.innerHTML=`<div class="cover">${emojis[Math.random()*emojis.length|0]}</div>
-<div class="content">${t}</div>`;
-c.onclick=e=>{
-effects(e);
+c.innerHTML=`<div class="cover">🌸</div><div class="content">${t}</div>`;
+c.onclick=()=>{
 c.querySelector(".cover").style.display="none";
-const ct=c.querySelector(".content");
-ct.style.display="block";
-ct.classList.add("blast");
+c.querySelector(".content").style.display="block";
+music.play();
+hearts();
 };
 grid.appendChild(c);
 });
