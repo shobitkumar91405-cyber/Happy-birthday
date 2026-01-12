@@ -1,292 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>SivaSingh 🤍 Nisha😍 🥀</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SivaSingh & Pallavi - A Beautiful Journey</title>
+    <style>
+        :root {
+            --bg-dark: #0b0e14;
+            --rose-pink: #ff4d6d;
+            --soft-glow: rgba(255, 77, 109, 0.4);
+            --text-gold: #f8f9fa;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
- background:#0b0e14;
- color:#eee;
- font-family:'Segoe UI',sans-serif;
- overflow-x:hidden;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-/* CANVAS */
-canvas{
- position:fixed;
- inset:0;
- z-index:-2;
-}
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-gold);
+            overflow-x: hidden;
+        }
 
-/* INTRO */
-#intro{
- position:fixed;
- inset:0;
- background:#000;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- z-index:999;
-}
-#heart{
- font-size:120px;
- cursor:pointer;
- animation:pulse 1.6s infinite,spin 14s linear infinite;
- filter:drop-shadow(0 0 40px #ff4d6d);
-}
-@keyframes pulse{50%{transform:scale(1.2)}}
-@keyframes spin{to{transform:rotateY(360deg)}}
-#enter{
- display:none;
- margin-top:25px;
- padding:12px 45px;
- border:none;
- border-radius:30px;
- background:#ff4d6d;
- color:#fff;
- font-size:16px;
-}
+        /* Particles & Background */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-/* MAIN */
-#main{
- display:none;
- max-width:900px;
- margin:auto;
- padding:20px;
-}
-h2{
- text-align:center;
- color:#ff4d6d;
- margin:40px 0 30px;
- letter-spacing:1px;
-}
+        /* Opening Screen */
+        #opening-screen {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1e26 0%, #0b0e14 100%);
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: opacity 1s ease-out;
+        }
 
-/* CARD */
-.card{
- background:#151921;
- border-radius:24px;
- padding:22px;
- margin:40px 0;
- box-shadow:0 0 40px rgba(255,77,109,.25);
- animation:fadeUp 1.3s ease both;
-}
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(40px)}
- to{opacity:1;transform:none}
-}
-.card img{
- width:100%;
- max-width:360px;
- display:block;
- margin:auto;
- border-radius:20px;
- box-shadow:0 0 25px rgba(255,77,109,.3);
-}
-.shayari{
- margin-top:18px;
- font-size:1.05rem;
- line-height:1.9;
- text-align:center;
- text-shadow:0 0 12px rgba(255,77,109,.6);
-}
+        .hero-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: white;
+            text-shadow: 0 0 20px var(--rose-pink);
+            animation: pulseGlow 3s infinite alternate;
+        }
 
-/* FLOATING HEARTS */
-.heart{
- position:fixed;
- font-size:18px;
- animation:float 3.2s linear forwards;
- pointer-events:none;
-}
-@keyframes float{
- to{transform:translateY(-260px);opacity:0}
-}
+        .hero-names {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: var(--rose-pink);
+        }
 
-/* INSTAGRAM */
-.insta{
- text-align:center;
- margin:60px 0 30px;
- padding:20px;
- background:#111;
- border-radius:20px;
-}
-.insta a{
- display:block;
- color:#ff4d6d;
- text-decoration:none;
- font-weight:600;
- margin:6px 0;
-}
+        @keyframes pulseGlow {
+            0% { transform: scale(1); text-shadow: 0 0 10px var(--rose-pink); }
+            100% { transform: scale(1.05); text-shadow: 0 0 40px var(--rose-pink), 0 0 60px #ff8fa3; }
+        }
 
-audio{display:none}
-</style>
+        /* Main Content */
+        #main-content {
+            display: none;
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 77, 109, 0.2);
+            border-radius: 20px;
+            margin-bottom: 80px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.2);
+        }
+
+        .gif-container {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .shayari-container {
+            padding: 40px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .shayari-line {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            min-height: 3.2em;
+            color: #ffd1dc;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Instagram Section */
+        .footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 77, 109, 0.2);
+        }
+
+        .insta-handle {
+            display: inline-block;
+            margin: 10px 20px;
+            color: var(--rose-pink);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .insta-handle:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero-text { font-size: 1.8rem; }
+            .card { margin-bottom: 40px; }
+            .gif-container { height: 300px; }
+            .shayari-line { font-size: 1.1rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="bg"></canvas>
+    <canvas id="canvas-container"></canvas>
 
-<!-- INTRO -->
-<div id="intro">
- <div id="heart">💖</div>
- <p style="margin-top:18px;color:#bbb">SivaSingh 🤍 Nisha 😍 🥀</p>
- <button id="enter">Enter Friendship ✨</button>
-</div>
+    <div id="opening-screen" onclick="startExperience()">
+        <div class="hero-text">Beautiful Friendship</div>
+        <div class="hero-names">SivaSingh & Pallavi 😍</div>
+        <p style="margin-top: 40px; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.6;">TAP TO ENTER OUR WORLD</p>
+    </div>
 
-<!-- MAIN -->
-<div id="main">
-<h2>Beautiful Friendship Moments</h2>
+    <div id="main-content">
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif1.gif" alt="Friendship Moment">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-1"></div>
+            </div>
+        </div>
 
-<!-- GIF 1 -->
-<div class="card">
-<img src="gif1.gif">
-<div class="shayari">
-𝐌𝐞𝐫𝐢 𝐇𝐚𝐫 𝐁𝐚𝐚𝐭 𝐓𝐮𝐦𝐬𝐞<br><br>
-Mujhe pasand ho tum,<br>
-mujhse apni har baat bataya karo na,
-</div>
-</div>
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif2.gif" alt="Bonding">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-2"></div>
+            </div>
+        </div>
 
-<!-- GIF 2 -->
-<div class="card">
-<img src="gif2.gif">
-<div class="shayari">
-Main to jatata hoon haq apna tumpe,<br>
-tum bhi thoda sa jataya karo na.
-</div>
-</div>
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif3.gif" alt="Trust">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-3"></div>
+            </div>
+        </div>
 
-<!-- GIF 3 -->
-<div class="card">
-<img src="gif3.gif">
-<div class="shayari">
-Main maan lunga har baat tumhari,<br>
-tum bas hukm karke bataya karo na,<br><br>
-Koi pooche kaun hai ye ladka,<br>
-to mujhe apna aur khud ko mera mehboob bataya karo na.
-</div>
-</div>
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif4.gif" alt="Happiness">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-4"></div>
+            </div>
+        </div>
 
-<!-- GIF 4 -->
-<div class="card">
-<img src="gif4.gif">
-<div class="shayari">
-Mujhe pasand hai tumhari muskaan,<br>
-tum hamesha yun hi muskuraya karo na,<br><br>
-Tum bahut khoobsurat ho,<br>
-phir bhi thoda sa singaar lagaya karo na.
-</div>
-</div>
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif5.gif" alt="Support">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-5"></div>
+            </div>
+        </div>
 
-<!-- GIF 5 -->
-<div class="card">
-<img src="gif5.gif">
-<div class="shayari">
-Main din-raat tumhare baare mein sochta hoon,<br>
-kya tum bhi sochti ho — sach batao na,<br><br>
-Tumhari khoobsurti ki kya tareef karoon,<br>
-sabko khud se thoda kam bataya karo na.
-</div>
-</div>
+        <div class="card">
+            <div class="gif-container" onclick="toggleMedia(this)">
+                <img src="gif6.gif" alt="Forever">
+            </div>
+            <div class="shayari-container">
+                <div class="shayari-line" id="shayari-6"></div>
+            </div>
+        </div>
 
-<!-- GIF 6 -->
-<div class="card">
-<img src="gif6.gif">
-<div class="shayari">
-Tumhare aankhon mein yun dub jata hoon har baar,<br>
-mera haath pakad kar nikaala karo na,<br><br>
-Mujhe tumhara dupatta pasand hai,<br>
-hamesha yun hi lagaya karo na,<br><br>
-Tumhare kaanon ke ghumke mujhe bahut pasand hain,<br>
-unhe sabko na dikhaya karo na,<br><br>
-Tumhare hothon ki laali kyun mujhe itni achhi lagti hai,<br>
-mujhe tum hi batao na.
-</div>
-</div>
+        <footer class="footer">
+            <h3 style="margin-bottom: 20px; color: white;">📸 Instagram</h3>
+            <a href="#" class="insta-handle">@smss1708</a>
+            <a href="#" class="insta-handle">@black_its_me20</a>
+        </footer>
+    </div>
 
-<!-- INSTA -->
-<div class="insta">
-📸 Instagram  
-<a href="https://instagram.com/smss1708" target="_blank">@smss1708</a>
-</div>
-</div>
+    <audio id="bgMusic" loop>
+        <source src="newsong.mp3" type="audio/mpeg">
+    </audio>
 
-<audio id="music" src="newsong.mp3" loop></audio>
+    <script>
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        const music = document.getElementById('bgMusic');
+        let particles = [];
 
-<script>
-/* BACKGROUND RAIN + PETALS */
-const c=document.getElementById("bg"),ctx=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight}
-resize();onresize=resize;
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-let drops=[],petals=[];
-for(let i=0;i<120;i++)drops.push({x:Math.random()*c.width,y:Math.random()*c.height,s:4+Math.random()*6});
-for(let i=0;i<40;i++)petals.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*20});
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 2;
+                this.speedY = Math.random() * 1 + 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.type = Math.random() > 0.8 ? 'heart' : 'circle';
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -20) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 77, 109, ${this.opacity})`;
+                if (this.type === 'heart') {
+                    ctx.font = `${this.size * 2}px serif`;
+                    ctx.fillText('💖', this.x, this.y);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
 
-(function draw(){
- ctx.clearRect(0,0,c.width,c.height);
- ctx.strokeStyle="rgba(180,200,255,.4)";
- drops.forEach(d=>{
-  ctx.beginPath();
-  ctx.moveTo(d.x,d.y);
-  ctx.lineTo(d.x,d.y+15);
-  ctx.stroke();
-  d.y+=d.s;if(d.y>c.height)d.y=0;
- });
- petals.forEach(p=>{
-  ctx.fillStyle="rgba(255,77,109,.4)";
-  ctx.beginPath();
-  ctx.ellipse(p.x,p.y,6,3,0,0,Math.PI*2);
-  ctx.fill();
-  p.y+=1;p.x+=Math.sin(p.y/40);
-  if(p.y>c.height)p.y=0;
- });
- requestAnimationFrame(draw);
-})();
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
 
-/* INTRO LOGIC */
-const heart=document.getElementById("heart");
-const enter=document.getElementById("enter");
-const intro=document.getElementById("intro");
-const main=document.getElementById("main");
-const music=document.getElementById("music");
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
 
-heart.onclick=e=>{
- for(let i=0;i<35;i++){
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="💖";
-  h.style.left=e.clientX+"px";
-  h.style.top=e.clientY+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),3200);
- }
- enter.style.display="block";
- music.play();
-};
+        const shayariData = [
+            ["Dosti ka rishta sabse anokha hota hai,", "SivaSingh aur Pallavi ka saath sabse pyara hota hai."],
+            ["Zindagi ke safar mein milte hain bahut se log,", "Par Pallavi jaisa dost kismat se hi milta hai SivaSingh ko."],
+            ["Khamoshiyon mein bhi jo baat samajh le,", "Aisi dosti SivaSingh aur Pallavi ki dastaan kehle."],
+            ["Phoolon ki mehak aur taron ki chamak,", "SivaSingh-Pallavi ki dosti rahe hamesha damak."],
+            ["Mushkil raahon mein bhi jo muskuraana sikha de,", "Pallavi hi hai woh jo SivaSingh ka har pal saja de."],
+            ["Sadiyon tak yaad rakhi jayegi yeh dosti,", "SivaSingh aur Pallavi ki sabse haseen hasti."]
+        ];
 
-enter.onclick=()=>{
- intro.style.display="none";
- main.style.display="block";
-};
+        function typeShayari(elementId, lines) {
+            let lineIdx = 0;
+            const el = document.getElementById(elementId);
+            
+            function showLine() {
+                el.style.transition = "opacity 1s, text-shadow 1s";
+                el.style.opacity = "0";
+                
+                setTimeout(() => {
+                    el.innerText = lines[lineIdx];
+                    el.style.opacity = "1";
+                    el.style.textShadow = "0 0 15px #ff4d6d";
+                    
+                    setTimeout(() => {
+                        lineIdx = (lineIdx + 1) % lines.length;
+                        showLine();
+                    }, 4000);
+                }, 1000);
+            }
+            showLine();
+        }
 
-document.querySelectorAll(".card").forEach(card=>{
- card.onclick=()=>{
-  for(let i=0;i<20;i++){
-   let h=document.createElement("div");
-   h.className="heart";
-   h.innerHTML="💖";
-   h.style.left=Math.random()*innerWidth+"px";
-   h.style.top=innerHeight+"px";
-   document.body.appendChild(h);
-   setTimeout(()=>h.remove(),3200);
-  }
- };
-});
-</script>
+        function startExperience() {
+            document.getElementById('opening-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('opening-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                music.play().catch(e => console.log("Autoplay blocked, waiting for interaction"));
+                
+                shayariData.forEach((lines, i) => {
+                    typeShayari(`shayari-${i+1}`, lines);
+                });
+            }, 1000);
+        }
 
+        function toggleMedia(container) {
+            if (music.paused) {
+                music.play();
+                container.style.boxShadow = "none";
+            } else {
+                music.pause();
+                container.style.boxShadow = "0 0 30px #ff4d6d";
+            }
+        }
+
+        // Parallax and scroll reveal logic
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    const volume = Math.max(0.2, 1 - (rect.top / window.innerHeight));
+                    music.volume = Math.min(volume, 1);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
