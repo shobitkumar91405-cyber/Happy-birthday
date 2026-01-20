@@ -1,404 +1,646 @@
 <!DOCTYPE html>
-​<html lang="en">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>For Khushi 💖</title>
-<style>
-:root {
---bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe4e1 50%, #fff0f5 100%);
---glass: rgba(255, 255, 255, 0.45);
---accent: #ff8fa3;
---text: #5d4037;
-}
-​{ margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body {
-font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-background: var(--bg-gradient);
-height: 100vh;
-width: 100vw;
-overflow: hidden;
-color: var(--text);
-display: flex;
-justify-content: center;
-align-items: center;
-position: relative;
-}
-#bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-.butterfly {
-position: absolute;
-font-size: 24px;
-pointer-events: none;
-z-index: 1;
-animation: fly linear infinite;
-opacity: 0.8;
-}
-@keyframes fly {
-0% { transform: translate(-50px, 100vh) rotate(0deg); }
-25% { transform: translate(25vw, 50vh) rotate(20deg); }
-50% { transform: translate(50vw, 80vh) rotate(-20deg); }
-75% { transform: translate(75vw, 30vh) rotate(10deg); }
-100% { transform: translate(110vw, -10vh) rotate(0deg); }
-}
-.heart {
-position: absolute;
-color: var(--accent);
-font-size: 15px;
-pointer-events: none;
-z-index: 1;
-animation: floatUp linear infinite;
-opacity: 0.6;
-}
-@keyframes floatUp {
-0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
-50% { opacity: 0.6; }
-100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-#header {
-position: fixed;
-top: 20px;
-left: 50%;
-transform: translateX(-50%);
-text-align: center;
-z-index: 100;
-font-size: 14px;
-font-weight: 500;
-opacity: 0.8;
-}
-.music-btn {
-position: fixed;
-bottom: 20px;
-right: 20px;
-width: 45px;
-height: 45px;
-background: var(--glass);
-backdrop-filter: blur(10px);
-border-radius: 50%;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-z-index: 101;
-box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-border: 1px solid rgba(255,255,255,0.5);
-}
-section {
-position: absolute;
-width: 90%;
-max-width: 400px;
-display: none;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-text-align: center;
-animation: fadeScale 1.2s ease-out forwards;
-}
-@keyframes fadeScale {
-from { opacity: 0; transform: scale(0.9) translateY(20px); }
-to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.glass-card {
-background: var(--glass);
-backdrop-filter: blur(15px);
-border-radius: 25px;
-padding: 30px;
-border: 1px solid rgba(255, 255, 255, 0.6);
-box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
-width: 100%;
-}
-.gif-img { width: 120px; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
-h1 { font-size: 26px; margin-bottom: 15px; }
-p { font-size: 17px; line-height: 1.5; margin-bottom: 25px; }
-.btn {
-background: white;
-color: var(--accent);
-padding: 12px 35px;
-border-radius: 50px;
-text-decoration: none;
-font-weight: bold;
-border: none;
-box-shadow: 0 5px 15px rgba(255, 143, 163, 0.3);
-cursor: pointer;
-transition: transform 0.3s;
-}
-.btn:active { transform: scale(0.95); }
-#video-container {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: #fff;
-z-index: 200;
-display: none;
-}
-video { width: 100%; height: 100%; object-fit: cover; }
-.book-container {
-perspective: 1000px;
-width: 260px;
-height: 320px;
-margin: 10px auto;
-cursor: pointer;
-}
-.book {
-width: 100%;
-height: 100%;
-position: relative;
-transform-style: preserve-3d;
-transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.book.open { transform: rotateY(-160deg); }
-.book-page {
-position: absolute;
-width: 100%;
-height: 100%;
-top: 0;
-left: 0;
-backface-visibility: hidden;
-border-radius: 15px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 20px;
-box-shadow: 5px 5px 20px rgba(0,0,0,0.05);
-}
-.book-front {
-background: white;
-z-index: 2;
-border: 1px solid #f0f0f0;
-}
-.book-back {
-background: #fffdfd;
-transform: rotateY(180deg);
-z-index: 1;
-}
-.multi-grid {
-display: flex;
-gap: 10px;
-justify-content: center;
-width: 100%;
-flex-wrap: wrap;
-}
-.small-book { width: 140px; height: 180px; }
-.triple-grid .small-book { width: 110px; height: 150px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dearest Khushi ❤️</title>
+    <style>
+        /* General Styles & Variables */
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #ffb3c1;
+            --dark-pink: #c9184a;
+            --bg-dark: #120107;
+            --text-light: #fefefe;
+            --text-dark: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-dark);
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: var(--text-light);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Credits Section */
+        .header-credit {
+            padding: 10px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--soft-pink);
+            text-transform: uppercase;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .hearts-container .heart {
+            position: absolute;
+            animation: floatUp 4s linear infinite;
+            font-size: 20px;
+            color: var(--primary-pink);
+            transform: translateY(0);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        /* The Book Styling */
+        .book-container {
+            perspective: 1500px;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 150px); /* Adjust for header and buttons */
+            position: relative;
+            z-index: 10;
+        }
+
+        .book {
+            width: 350px;
+            height: 500px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+            cursor: pointer;
+        }
+
+        .book.open {
+            transform: rotateY(-180deg) translateX(50%);
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            color: var(--text-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform-origin: left;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 5px 15px 15px 5px;
+            overflow-y: auto; /* For long messages/content */
+        }
+
+        .cover {
+            background: linear-gradient(45deg, var(--dark-pink), var(--primary-pink));
+            color: white;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 5px 15px 15px 5px;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* Content Styling */
+        h1, h2, h3 { color: var(--dark-pink); text-align: center; margin-bottom: 10px;}
+        .cover h1 { color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+        .media-container {
+            width: 100%;
+            max-height: 250px; /* Adjusted for better fit */
+            margin: 10px auto;
+            background: #eee;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        img, video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Use contain to show full image/video */
+            border-radius: 8px;
+        }
+
+        .message-text {
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: justify;
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            background: var(--primary-pink);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--dark-pink);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.6);
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 77, 109, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .audio-player label {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Special Effects/Animations */
+        .heart-glow {
+            animation: pulse 1.5s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--soft-pink)); }
+            100% { transform: scale(1.05); filter: drop-shadow(0 0 15px var(--primary-pink)); }
+        }
+
+        /* Countdown Timer */
+        #countdown {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 30px;
+            color: var(--soft-pink);
+            text-shadow: 0 0 10px var(--primary-pink);
+        }
+        #countdown div {
+            display: inline-block;
+            margin: 0 10px;
+            position: relative;
+        }
+        #countdown div span {
+            display: block;
+            font-size: 0.5em;
+            text-transform: uppercase;
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* Fireworks animation (simplified for single file) */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fireworkExplode 1s forwards;
+        }
+        @keyframes fireworkExplode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+
+    </style>
 </head>
 <body>
-​<div id="bg-layer"></div>
-​<div id="header">
-Made by sivasingh 💖
 
-<span style="font-size: 10px; opacity: 0.7;">@smss1708</span>
-</div>
-​<div class="music-btn" onclick="toggleMute()">🎵</div>
-​<section id="sec-intro" style="display: flex;">
-<div class="glass-card" style="transform: translateY(0); transition: 0.5s;">
-<img src="intro.gif" class="gif-img" alt="Love">
-<h1>Hey Babu 💖</h1>
-<p>Can we talk for a moment?
-There’s something special I want to show you…</p>
-<button class="btn" onclick="startJourney()">Open 💌</button>
-</div>
-</section>
-​<div id="video-container">
-<video id="loveVideo" playsinline>
-<source src="intro-love.mp4" type="video/mp4">
-</video>
-</div>
-​<section id="sec-1">
-<div class="book-container" onclick="openBook(this, 2)">
-<div class="book">
-<div class="book-page book-front">
-<img src="rose.gif" class="gif-img">
-<p>Tap to Read 🌹</p>
-</div>
-<div class="book-page book-back">
-<p><b>Khushi 💖</b>
+    <div class="header-credit">MADE BY SIVASINGH</div>
 
-You are the most beautiful feeling of my life. Every smile of yours makes my world brighter…</p>
-</div>
-</div>
-</div>
-</section>
-​<section id="sec-2">
-<div class="multi-grid">
-<div class="book-container small-book" onclick="checkDouble(this)">
-<div class="book">
-<div class="book-page book-front">
-<img src="heart1.gif" style="width:50px">
-</div>
-<div class="book-page book-back">
-<p style="font-size:12px">My every heartbeat...</p>
-</div>
-</div>
-</div>
-<div class="book-container small-book" onclick="checkDouble(this)">
-<div class="book">
-<div class="book-page book-front">
-<img src="heart2.gif" style="width:50px">
-</div>
-<div class="book-page book-back">
-<p style="font-size:12px">whispers your name, Khushi 💕</p>
-</div>
-</div>
-</div>
-</div>
-<p style="margin-top:20px; font-size:14px; opacity:0.7">softly… endlessly…</p>
-</section>
-​<section id="sec-3">
-<div class="multi-grid triple-grid">
-<div class="book-container small-book" onclick="checkTriple(this)">
-<div class="book">
-<div class="book-page book-front"><img src="hug.gif" style="width:40px"></div>
-<div class="book-page book-back"><p style="font-size:11px">Safe in your arms</p></div>
-</div>
-</div>
-<div class="book-container small-book" onclick="checkTriple(this)">
-<div class="book">
-<div class="book-page book-front"><img src="kiss.gif" style="width:40px"></div>
-<div class="book-page book-back"><p style="font-size:11px">Warmth of your soul</p></div>
-</div>
-</div>
-<div class="book-container small-book" onclick="checkTriple(this)">
-<div class="book">
-<div class="book-page book-front"><img src="cute.gif" style="width:40px"></div>
-<div class="book-page book-back"><p style="font-size:11px">My favorite person</p></div>
-</div>
-</div>
-</div>
-</section>
-​<section id="sec-4">
-<div class="book-container" onclick="openBook(this, 5)">
-<div class="book">
-<div class="book-page book-front">
-<img src="promise.gif" class="gif-img">
-<p>A Promise? 💍</p>
-</div>
-<div class="book-page book-back">
-<p><b>Khushi 💖</b>
+    <div class="hearts-container" id="hearts"></div>
+    <div class="fireworks-container" id="fireworks"></div>
 
-Not just today, I choose you… Every single day 🌹</p>
-</div>
-</div>
-</div>
-</section>
-​<section id="sec-final">
-<div class="glass-card">
-<img src="endlove.gif" class="gif-img">
-<h1>Will you stay with me forever, Khushi? 💖</h1>
-<p style="font-style: italic; opacity: 0.8;">You are my always & forever.</p>
-</div>
-</section>
-​<audio id="bgMusic" loop>
-<source src="tere-liye.mp3" type="audio/mpeg">
-</audio>
-​<script>
-const bgLayer = document.getElementById('bg-layer');
-const bgMusic = document.getElementById('bgMusic');
-const video = document.getElementById('loveVideo');
-const videoCont = document.getElementById('video-container');
-​function createElements() {
-for(let i=0; i<15; i++) {
-const heart = document.createElement('div');
-heart.className = 'heart';
-heart.innerHTML = '💖';
-heart.style.left = Math.random() * 100 + 'vw';
-heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-heart.style.animationDelay = (Math.random() * 5) + 's';
-bgLayer.appendChild(heart);
-}
-for(let i=0; i<6; i++) {
-const bf = document.createElement('div');
-bf.className = 'butterfly';
-bf.innerHTML = '🦋';
-bf.style.animationDuration = (Math.random() * 5 + 8) + 's';
-bf.style.animationDelay = (Math.random() * 10) + 's';
-bgLayer.appendChild(bf);
-}
-}
-createElements();
-​function startJourney() {
-bgMusic.volume = 0.35;
-bgMusic.play();
-hideSection('sec-intro');
-videoCont.style.display = 'block';
-bgMusic.pause();
-video.play();
-}
-​video.onended = () => {
-videoCont.style.opacity = '0';
-setTimeout(() => {
-videoCont.style.display = 'none';
-bgMusic.play();
-showSection('sec-1');
-}, 1000);
-};
-​function showSection(id) {
-const el = document.getElementById(id);
-el.style.display = 'flex';
-}
-​function hideSection(id) {
-const el = document.getElementById(id);
-el.style.opacity = '0';
-setTimeout(() => { el.style.display = 'none'; }, 1000);
-}
-​function openBook(el, nextSecNum) {
-const book = el.querySelector('.book');
-if(!book.classList.contains('open')) {
-book.classList.add('open');
-setTimeout(() => {
-hideSection(el.parentElement.id);
-const nextId = nextSecNum === 5 ? 'sec-final' : 'sec-' + nextSecNum;
-setTimeout(() => {
-showSection(nextId);
-if(nextId === 'sec-final') slowDownAnimations();
-}, 1000);
-}, 3500);
-}
-}
-​let doubleCount = 0;
-function checkDouble(el) {
-const book = el.querySelector('.book');
-if(!book.classList.contains('open')) {
-book.classList.add('open');
-doubleCount++;
-if(doubleCount === 2) {
-setTimeout(() => {
-hideSection('sec-2');
-setTimeout(() => showSection('sec-3'), 1000);
-}, 3500);
-}
-}
-}
-​let tripleCount = 0;
-function checkTriple(el) {
-const book = el.querySelector('.book');
-if(!book.classList.contains('open')) {
-book.classList.add('open');
-tripleCount++;
-if(tripleCount === 3) {
-setTimeout(() => {
-hideSection('sec-3');
-setTimeout(() => showSection('sec-4'), 1000);
-}, 3500);
-}
-}
-}
-​function toggleMute() {
-bgMusic.muted = !bgMusic.muted;
-}
-​function slowDownAnimations() {
-document.querySelectorAll('.butterfly').forEach(b => b.style.animationDuration = '20s');
-for(let i=0; i<30; i++) {
-const heart = document.createElement('div');
-heart.className = 'heart';
-heart.innerHTML = '💖';
-heart.style.left = Math.random() * 100 + 'vw';
-heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-bgLayer.appendChild(heart);
-}
-}
-</script>
-​</body>
-                                                    </html>
+    <div class="book-container">
+        <div class="book" id="myBook">
+            
+            <div class="page cover" id="p1" style="z-index: 10;">
+                <img src="heart1.gif" style="width: 120px;" class="heart-glow">
+                <h1>My Dearest Khushi ❤️</h1>
+                <p style="font-size: 1.2em; margin-top: 15px;">A Little Book of Our Love Story</p>
+                <p style="font-size: 0.9em; margin-top: 20px;">Click me to dive in!</p>
+            </div>
+
+            <div class="page" id="p2" style="z-index: 9;">
+                <h2>My Everything!</h2>
+                <div class="media-container">
+                    <img src="photo1.jpg" alt="Our First Picture">
+                </div>
+                <p class="message-text">
+                    "Khushi, from the moment I first saw you, my world transformed into a vibrant wonderland. You bring
+                    so much joy, laughter, and warmth into my life. Every day with you is a new adventure, a new reason
+                    to smile. You're not just my girlfriend, you're my best friend, my confidante, and my greatest love."
+                </p>
+                <img src="cute.gif" style="width: 80px; align-self: center; margin-top: 15px;">
+            </div>
+
+            <div class="page" id="p3" style="z-index: 8;">
+                <h2>Our Special Moments</h2>
+                <div class="media-container">
+                    <video id="vdo1" controls>
+                        <source src="video1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="message-text">
+                    "Remember this moment? It's one of my absolute favorites. Every time I watch it, it reminds me of
+                    the pure happiness we share. You have a way of making every ordinary moment feel extraordinary.
+                    Thank you for being you, my love."
+                </p>
+                <p style="text-align: center; margin-top: 10px; font-size: 0.9em;">
+                    <audio id="audio1" controls src="Happy_Birthday_Song_R.mp3"></audio>
+                    (Our happy song!)
+                </p>
+            </div>
+
+            <div class="page" id="p4" style="z-index: 7;">
+                <h2>A Glimpse of Us</h2>
+                <div class="media-container">
+                    <img src="photo2.jpg" alt="Photo 2">
+                </div>
+                <div class="media-container" style="height: 150px;">
+                    <img src="gif1.gif" alt="Gif 1">
+                </div>
+                <p class="message-text">
+                    "Each picture tells a story, and ours is my favorite fairy tale. From our silly moments to our deepest
+                    conversations, I cherish every single memory we create together. Here's to many, many more!"
+                </p>
+                <img src="heart2.gif" style="width: 60px; align-self: center; margin-top: 10px;">
+            </div>
+
+            <div class="page" id="p5" style="z-index: 6;">
+                <h2>My Heart's Confession</h2>
+                <div class="media-container">
+                    <img src="photo3.jpg" alt="Photo 3">
+                </div>
+                <p class="message-text">
+                    "You've captured my heart in a way no one ever has. With you, I feel complete, understood, and
+                    loved beyond measure. My love for you grows stronger with each passing day, like a beautiful
+                    flower blooming in my soul."
+                </p>
+                <div class="media-container" style="height: 120px;">
+                    <img src="gif2.gif" alt="Gif 2">
+                </div>
+            </div>
+
+            <div class="page" id="p6" style="z-index: 5;">
+                <h2>A Kiss for My Love</h2>
+                <div class="media-container">
+                    <img src="kiss.gif" alt="Kiss">
+                </div>
+                <p class="message-text">
+                    "Every kiss with you is a moment suspended in time, a sweet promise of our unending love.
+                    You are the melody in my heart, the sunlight in my darkest days, and the reason I believe in true love."
+                </p>
+                <audio id="audio2" controls src="broken.mp3"></audio> (Just kidding! Our love is strong!)
+            </div>
+
+            <div class="page" id="p7" style="z-index: 4;">
+                <h2>Treasured Moments</h2>
+                <div class="media-container">
+                    <video id="vdo2" controls>
+                        <source src="video2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="message-text">
+                    "This video reminds me of how much fun we always have. Life with you is never boring;
+                    it's a constant source of joy and excitement. I can't wait to create countless more videos
+                    and memories with you, my darling."
+                </p>
+                <audio id="audio3" controls src="newsong.mp3"></audio> (A new song for us!)
+            </div>
+
+            <div class="page" id="p8" style="z-index: 3;">
+                <h2>Countdown to Forever!</h2>
+                <p class="message-text" style="font-size: 1.1em;">
+                    "Every second brings us closer to our next beautiful chapter.
+                    Counting down the days until we celebrate our love again!"
+                </p>
+                <div id="countdown" style="margin-top: 20px;"></div>
+                <img src="endlove.gif" style="width: 100px; align-self: center; margin-top: 15px;">
+            </div>
+
+            <div class="page" id="p9" style="z-index: 2;">
+                <h2>My Promise to You</h2>
+                <div class="media-container">
+                    <img src="promise.gif" alt="Promise">
+                </div>
+                <p class="message-text">
+                    "I promise to always be there for you, through thick and thin. To support your dreams,
+                    to laugh with you, to cry with you, and to love you fiercely every single day.
+                    You are my forever and always."
+                </p>
+                <p style="text-align: center; margin-top: 20px; font-weight: bold;">
+                    Will you be my Valentine, Khushi? (Or, Will you be mine, forever?)
+                </p>
+                <img src="rose.gif" style="width: 80px; align-self: center; margin-top: 10px;">
+            </div>
+
+            <div class="page" id="p10" style="z-index: 1;">
+                <h2>My Eternal Love</h2>
+                <p class="message-text" style="font-size: 1.1em;">
+                    "Khushi, you are the most incredible person I've ever known. My love for you is boundless and
+                    eternal. Thank you for making my life so beautiful and meaningful. I love you more than words can say."
+                </p>
+                <div class="media-container">
+                    <img src="sorry1.gif" alt="Sorry" style="filter: grayscale(100%); opacity: 0.7;">
+                    <p style="position: absolute; color: white; text-shadow: 2px 2px 5px black; font-size: 1.2em;">(Never sorry for loving you!)</p>
+                </div>
+                <button onclick="triggerFireworks()" style="margin-top: 20px; align-self: center;">💖 SURPRISE! 💖</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button onclick="prevPage()">PREVIOUS PAGE</button>
+        <button onclick="nextPage()">NEXT PAGE</button>
+    </div>
+
+    <div class="audio-player">
+        <label for="bgMusicToggle">Romantic BGM:</label>
+        <audio id="bgMusic" loop>
+            <source src="tere-liye.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="musicBtn" onclick="toggleMusic()">🎵 Play Music</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 10; // Updated total pages
+        const book = document.getElementById('myBook');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        // All video and audio elements
+        const allVideos = document.querySelectorAll('video');
+        const allAudios = document.querySelectorAll('audio:not(#bgMusic)'); // Exclude background music
+
+        // --- Book Navigation Logic ---
+        function nextPage() {
+            if (currentPage < totalPages) {
+                stopAllMedia(); // Stop all media before turning page
+                const page = document.getElementById('p' + currentPage);
+                page.classList.add('flipped');
+                page.style.zIndex = totalPages - currentPage; // Update z-index for proper stacking
+                currentPage++;
+                if (currentPage === 2) {
+                    book.classList.add('open');
+                }
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                stopAllMedia(); // Stop all media before turning page
+                currentPage--;
+                const page = document.getElementById('p' + currentPage);
+                page.classList.remove('flipped');
+                page.style.zIndex = totalPages - currentPage + 1; // Correct z-index for unflipped page
+                if (currentPage === 1) {
+                    book.classList.remove('open');
+                }
+            }
+        }
+
+        // --- Media Control Logic ---
+        function stopAllMedia() {
+            allVideos.forEach(video => {
+                if (!video.paused) video.pause();
+            });
+            allAudios.forEach(audio => {
+                if (!audio.paused) audio.pause();
+            });
+            // Optionally, restart background music if it was playing before a video took over
+            if (bgMusic.dataset.wasPlaying === 'true') {
+                bgMusic.play();
+            }
+        }
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicBtn.innerText = "🎵 Music On";
+                bgMusic.dataset.wasPlaying = 'true';
+            } else {
+                bgMusic.pause();
+                musicBtn.innerText = "🎵 Music Off";
+                bgMusic.dataset.wasPlaying = 'false';
+            }
+        }
+
+        // Pause background music when any other media plays
+        allVideos.forEach(video => {
+            video.onplay = function() {
+                if (!bgMusic.paused) {
+                    bgMusic.pause();
+                    bgMusic.dataset.wasPlaying = 'true'; // Mark that BGM was playing
+                    musicBtn.innerText = "🎵 Music Paused";
+                }
+            };
+            video.onended = video.onpause = function() {
+                if (bgMusic.dataset.wasPlaying === 'true') { // If BGM was playing, resume it
+                    bgMusic.play();
+                    musicBtn.innerText = "🎵 Music On";
+                }
+            };
+        });
+
+        allAudios.forEach(audio => {
+            audio.onplay = function() {
+                if (!bgMusic.paused) {
+                    bgMusic.pause();
+                    bgMusic.dataset.wasPlaying = 'true'; // Mark that BGM was playing
+                    musicBtn.innerText = "🎵 Music Paused";
+                }
+            };
+            audio.onended = audio.onpause = function() {
+                if (bgMusic.dataset.wasPlaying === 'true') { // If BGM was playing, resume it
+                    bgMusic.play();
+                    musicBtn.innerText = "🎵 Music On";
+                }
+            };
+        });
+
+
+        // --- Floating Hearts Generator ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's'; // 3-6 seconds
+            heart.style.animationDelay = (Math.random() * 2) + 's'; // up to 2s delay
+            heart.innerHTML = '❤️';
+            document.getElementById('hearts').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, parseFloat(heart.style.animationDuration) * 1000); // Remove after animation
+        }
+        setInterval(createHeart, 300); // More frequent hearts
+
+        // --- Countdown Timer for Valentine's Day ---
+        const valentineDate = new Date("Feb 14, 2025 00:00:00").getTime();
+        const countdownElement = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = valentineDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (countdownElement) {
+                countdownElement.innerHTML = `
+                    <div>${days}<span>Days</span></div>
+                    <div>${hours}<span>Hours</span></div>
+                    <div>${minutes}<span>Minutes</span></div>
+                    <div>${seconds}<span>Seconds</span></div>
+                `;
+
+                if (distance < 0) {
+                    countdownElement.innerHTML = "Happy Valentine's Day, My Love!";
+                }
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+
+        // --- Fireworks Animation ---
+        function createFirework(x, y) {
+            const fwContainer = document.getElementById('fireworks');
+            fwContainer.style.display = 'block'; // Show fireworks container
+            
+            for (let i = 0; i < 30; i++) {
+                const fireworkParticle = document.createElement('div');
+                fireworkParticle.classList.add('firework');
+                fireworkParticle.style.left = x + 'px';
+                fireworkParticle.style.top = y + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 80 + 20; // 20 to 100px spread
+                const endX = x + distance * Math.cos(angle);
+                const endY = y + distance * Math.sin(angle);
+
+                fireworkParticle.style.setProperty('--end-x', endX + 'px');
+                fireworkParticle.style.setProperty('--end-y', endY + 'px');
+                
+                fireworkParticle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                fireworkParticle.style.animation = `fireworkSpread 0.8s forwards ease-out`;
+                fireworkParticle.style.animationDelay = (Math.random() * 0.3) + 's'; // Slight delay for spread effect
+
+                // Define fireworkSpread keyframes dynamically
+                const styleSheet = document.styleSheets[0];
+                styleSheet.insertRule(`
+                    @keyframes fireworkSpread {
+                        0% { transform: translate(0,0) scale(1); opacity: 1; }
+                        100% { transform: translate(${endX - x}px, ${endY - y}px) scale(0); opacity: 0; }
+                    }
+                `, styleSheet.cssRules.length);
+
+                fwContainer.appendChild(fireworkParticle);
+
+                setTimeout(() => fireworkParticle.remove(), 1000); // Remove particle after animation
+            }
+
+            setTimeout(() => fwContainer.style.display = 'none', 1500); // Hide container after all fireworks
+        }
+
+        function triggerFireworks() {
+            // Trigger multiple fireworks at random positions
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight * 0.7; // Upper 70% of screen
+                    createFirework(x, y);
+                }, i * 200); // Stagger them
+            }
+        }
+
+
+        // --- Initial Load Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup initial z-index for pages
+            for (let i = 1; i <= totalPages; i++) {
+                document.getElementById('p' + i).style.zIndex = totalPages - i + 1;
+            }
+            // Add click event to cover to open the book and start music
+            document.getElementById('p1').addEventListener('click', () => {
+                if (currentPage === 1) { // Only open if on the cover page
+                    nextPage();
+                    if (bgMusic.paused) {
+                        toggleMusic(); // Start background music if not already playing
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
