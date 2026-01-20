@@ -1,98 +1,404 @@
 <!DOCTYPE html>
-<html lang="en">
+​<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Khushi 💖</title>
-    <style>
-        :root { --p-pink: #ffd1dc; --p-peach: #fff5e1; --glass: rgba(255, 255, 255, 0.45); --glass-border: rgba(255, 255, 255, 0.6); --rose: #d63384; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        body, html { height: 100%; width: 100%; overflow: hidden; background: linear-gradient(135deg, var(--p-pink), var(--p-peach), #ffffff); }
-        #bg { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .heart { position: absolute; color: #ff8fa3; animation: floatUp 6s linear infinite; font-size: 20px; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0.5); opacity: 0; } 20% { opacity: 0.7; } 100% { transform: translateY(-15vh) scale(1.5); opacity: 0; } }
-        .butterfly { position: absolute; font-size: 25px; z-index: 1; animation: fly 15s linear infinite; opacity: 0.8; }
-        @keyframes fly { 0% { transform: translate(-10vw, 80vh); } 50% { transform: translate(50vw, 20vh); } 100% { transform: translate(110vw, 40vh); } }
-        header { position: fixed; top: 15px; width: 100%; text-align: center; z-index: 100; }
-        .made-by { background: var(--glass); backdrop-filter: blur(5px); border: 1px solid var(--glass-border); padding: 8px 20px; border-radius: 50px; font-size: 12px; color: var(--rose); display: inline-block; }
-        #mute-btn { position: fixed; bottom: 20px; right: 20px; z-index: 200; width: 45px; height: 45px; border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .section { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 1.2s; transform: scale(0.9); z-index: 10; padding: 20px; }
-        .section.active { opacity: 1; visibility: visible; transform: scale(1); }
-        .card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px; width: 100%; max-width: 350px; text-align: center; }
-        #vid-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 150; display: none; align-items: center; }
-        #vid { width: 100%; height: 100%; object-fit: cover; }
-        .book { width: 160px; height: 220px; perspective: 1200px; cursor: pointer; margin: 10px; }
-        .book-in { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: 1.2s; }
-        .book.open .book-in { transform: rotateY(-150deg); }
-        .b-front, .b-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .b-front { background: white; z-index: 2; }
-        .b-back { background: #fffafa; transform: rotateY(180deg); text-align: center; color: #555; font-size: 13px; }
-        .btn { background: #ff8fa3; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .pop { position: absolute; pointer-events: none; animation: pop 0.8s ease-out forwards; }
-        @keyframes pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(2); opacity: 0; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For Khushi 💖</title>
+<style>
+:root {
+--bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe4e1 50%, #fff0f5 100%);
+--glass: rgba(255, 255, 255, 0.45);
+--accent: #ff8fa3;
+--text: #5d4037;
+}
+​{ margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+background: var(--bg-gradient);
+height: 100vh;
+width: 100vw;
+overflow: hidden;
+color: var(--text);
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+}
+#bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.butterfly {
+position: absolute;
+font-size: 24px;
+pointer-events: none;
+z-index: 1;
+animation: fly linear infinite;
+opacity: 0.8;
+}
+@keyframes fly {
+0% { transform: translate(-50px, 100vh) rotate(0deg); }
+25% { transform: translate(25vw, 50vh) rotate(20deg); }
+50% { transform: translate(50vw, 80vh) rotate(-20deg); }
+75% { transform: translate(75vw, 30vh) rotate(10deg); }
+100% { transform: translate(110vw, -10vh) rotate(0deg); }
+}
+.heart {
+position: absolute;
+color: var(--accent);
+font-size: 15px;
+pointer-events: none;
+z-index: 1;
+animation: floatUp linear infinite;
+opacity: 0.6;
+}
+@keyframes floatUp {
+0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+50% { opacity: 0.6; }
+100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+#header {
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+text-align: center;
+z-index: 100;
+font-size: 14px;
+font-weight: 500;
+opacity: 0.8;
+}
+.music-btn {
+position: fixed;
+bottom: 20px;
+right: 20px;
+width: 45px;
+height: 45px;
+background: var(--glass);
+backdrop-filter: blur(10px);
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+z-index: 101;
+box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+border: 1px solid rgba(255,255,255,0.5);
+}
+section {
+position: absolute;
+width: 90%;
+max-width: 400px;
+display: none;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+animation: fadeScale 1.2s ease-out forwards;
+}
+@keyframes fadeScale {
+from { opacity: 0; transform: scale(0.9) translateY(20px); }
+to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.glass-card {
+background: var(--glass);
+backdrop-filter: blur(15px);
+border-radius: 25px;
+padding: 30px;
+border: 1px solid rgba(255, 255, 255, 0.6);
+box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
+width: 100%;
+}
+.gif-img { width: 120px; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
+h1 { font-size: 26px; margin-bottom: 15px; }
+p { font-size: 17px; line-height: 1.5; margin-bottom: 25px; }
+.btn {
+background: white;
+color: var(--accent);
+padding: 12px 35px;
+border-radius: 50px;
+text-decoration: none;
+font-weight: bold;
+border: none;
+box-shadow: 0 5px 15px rgba(255, 143, 163, 0.3);
+cursor: pointer;
+transition: transform 0.3s;
+}
+.btn:active { transform: scale(0.95); }
+#video-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #fff;
+z-index: 200;
+display: none;
+}
+video { width: 100%; height: 100%; object-fit: cover; }
+.book-container {
+perspective: 1000px;
+width: 260px;
+height: 320px;
+margin: 10px auto;
+cursor: pointer;
+}
+.book {
+width: 100%;
+height: 100%;
+position: relative;
+transform-style: preserve-3d;
+transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.book.open { transform: rotateY(-160deg); }
+.book-page {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+backface-visibility: hidden;
+border-radius: 15px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 20px;
+box-shadow: 5px 5px 20px rgba(0,0,0,0.05);
+}
+.book-front {
+background: white;
+z-index: 2;
+border: 1px solid #f0f0f0;
+}
+.book-back {
+background: #fffdfd;
+transform: rotateY(180deg);
+z-index: 1;
+}
+.multi-grid {
+display: flex;
+gap: 10px;
+justify-content: center;
+width: 100%;
+flex-wrap: wrap;
+}
+.small-book { width: 140px; height: 180px; }
+.triple-grid .small-book { width: 110px; height: 150px; }
+</style>
 </head>
 <body>
-    <div id="bg"></div>
-    <header><div class="made-by">Made by sivasingh 💖 @smss1708</div></header>
-    <div id="mute-btn" onclick="toggle()">🎵</div>
-    <section id="s-intro" class="section active">
-        <div class="card">
-            <img src="intro.gif" style="width:100px;margin-bottom:20px">
-            <h2 style="color:var(--rose)">Hey Babu 💖</h2>
-            <p style="margin:15px 0; color:#666">Can we talk for a moment?<br>There's something special I want to show you...</p>
-            <button class="btn" onclick="start()">Open 💌</button>
-        </div>
-    </section>
-    <div id="vid-wrap"><video id="vid" playsinline><source src="intro-love.mp4" type="video/mp4"></video></div>
-    <section id="s1" class="section">
-        <div class="book" onclick="nextB(this, 's2')">
-            <div class="book-in">
-                <div class="b-front"><img src="rose.gif" style="width:70px"><small style="color:#aaa">Tap to open</small></div>
-                <div class="b-back"><b>Khushi 💖</b><br><br>You are the most beautiful feeling of my life. Every smile of yours makes my world brighter...</div>
-            </div>
-        </div>
-    </section>
-    <section id="s2" class="section">
-        <div style="display:flex;gap:10px">
-            <div class="book" style="width:140px;height:180px" onclick="multi(this, 2, 's3')">
-                <div class="book-in"><div class="b-front"><img src="heart1.gif" style="width:40px"></div><div class="b-back">My every heartbeat whispers your name...</div></div>
-            </div>
-            <div class="book" style="width:140px;height:180px" onclick="multi(this, 2, 's3')">
-                <div class="book-in"><div class="b-front"><img src="heart2.gif" style="width:40px"></div><div class="b-back">softly... endlessly... 💕</div></div>
-            </div>
-        </div>
-    </section>
-    <section id="s3" class="section">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="book" style="width:130px;height:160px" onclick="multi(this, 3, 's4')"><div class="book-in"><div class="b-front"><img src="hug.gif" style="width:40px"></div><div class="b-back">Your hugs are home.</div></div></div>
-            <div class="book" style="width:130px;height:160px" onclick="multi(this, 3, 's4')"><div class="book-in"><div class="b-front"><img src="kiss.gif" style="width:40px"></div><div class="b-back">Sweetest kisses.</div></div></div>
-            <div class="book" style="width:130px;height:160px;grid-column:span 2;margin:0 auto" onclick="multi(this, 3, 's4')"><div class="book-in"><div class="b-front"><img src="cute.gif" style="width:40px"></div><div class="b-back">Simply the best!</div></div></div>
-        </div>
-    </section>
-    <section id="s4" class="section">
-        <div class="book" style="width:200px;height:260px" onclick="nextB(this, 'sf')">
-            <div class="book-in"><div class="b-front"><img src="promise.gif" style="width:80px"><h3>A Promise</h3></div>
-            <div class="b-back"><h3>Khushi 💖</h3><br>Not just today, I choose you... Every single day 🌹</div></div>
-        </div>
-    </section>
-    <section id="sf" class="section">
-        <div class="card"><img src="endlove.gif" style="width:100px"><h2 style="color:var(--rose)">Will you stay with me forever, Khushi? 💖</h2></div>
-    </section>
-    <audio id="mus" loop><source src="tere-liye.mp3" type="audio/mpeg"></audio>
-    <script>
-        const a=document.getElementById('mus'), v=document.getElementById('vid'), vw=document.getElementById('vid-wrap'), bg=document.getElementById('bg');
-        a.volume=0.35;
-        function hearts(){ const h=document.createElement('div'); h.className='heart'; h.innerHTML='💖'; h.style.left=Math.random()*100+'vw'; h.style.animationDuration=(Math.random()*3+4)+'s'; bg.appendChild(h); setTimeout(()=>h.remove(),6000); }
-        setInterval(hearts,500);
-        for(let i=0;i<5;i++){ const b=document.createElement('div'); b.className='butterfly'; b.innerHTML='🦋'; b.style.top=Math.random()*80+'vh'; b.style.left='-50px'; b.style.animationDelay=(i*3)+'s'; bg.appendChild(b); }
-        function start(){ a.play().catch(()=>{}); document.getElementById('s-intro').classList.remove('active'); setTimeout(()=>{ vw.style.display='flex'; a.pause(); v.play(); },1000); }
-        v.onended=()=>{ vw.style.opacity='0'; setTimeout(()=>{ vw.style.display='none'; a.play(); show('s1'); },1000); };
-        function show(id){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        function nextB(el,id){ if(el.classList.contains('open'))return; el.classList.add('open'); pop(el); setTimeout(()=>show(id),3500); }
-        let c=0; function multi(el,r,id){ if(el.classList.contains('open'))return; el.classList.add('open'); pop(el); c++; if(c>=r){c=0; setTimeout(()=>show(id),3500);} }
-        function pop(el){ const r=el.getBoundingClientRect(); for(let i=0;i<6;i++){ const p=document.createElement('div'); p.className='pop'; p.innerHTML='❤️'; p.style.left=(r.left+r.width/2)+'px'; p.style.top=(r.top+r.height/2)+'px'; p.style.transform=`translate(${(Math.random()-0.5)*150}px, ${(Math.random()-0.5)*150}px)`; document.body.appendChild(p); setTimeout(()=>p.remove(),800); } }
-        function toggle(){ if(a.paused)a.play(); else a.pause(); }
-    </script>
-</body>
-</html>
+​<div id="bg-layer"></div>
+​<div id="header">
+Made by sivasingh 💖
+
+<span style="font-size: 10px; opacity: 0.7;">@smss1708</span>
+</div>
+​<div class="music-btn" onclick="toggleMute()">🎵</div>
+​<section id="sec-intro" style="display: flex;">
+<div class="glass-card" style="transform: translateY(0); transition: 0.5s;">
+<img src="intro.gif" class="gif-img" alt="Love">
+<h1>Hey Babu 💖</h1>
+<p>Can we talk for a moment?
+There’s something special I want to show you…</p>
+<button class="btn" onclick="startJourney()">Open 💌</button>
+</div>
+</section>
+​<div id="video-container">
+<video id="loveVideo" playsinline>
+<source src="intro-love.mp4" type="video/mp4">
+</video>
+</div>
+​<section id="sec-1">
+<div class="book-container" onclick="openBook(this, 2)">
+<div class="book">
+<div class="book-page book-front">
+<img src="rose.gif" class="gif-img">
+<p>Tap to Read 🌹</p>
+</div>
+<div class="book-page book-back">
+<p><b>Khushi 💖</b>
+
+You are the most beautiful feeling of my life. Every smile of yours makes my world brighter…</p>
+</div>
+</div>
+</div>
+</section>
+​<section id="sec-2">
+<div class="multi-grid">
+<div class="book-container small-book" onclick="checkDouble(this)">
+<div class="book">
+<div class="book-page book-front">
+<img src="heart1.gif" style="width:50px">
+</div>
+<div class="book-page book-back">
+<p style="font-size:12px">My every heartbeat...</p>
+</div>
+</div>
+</div>
+<div class="book-container small-book" onclick="checkDouble(this)">
+<div class="book">
+<div class="book-page book-front">
+<img src="heart2.gif" style="width:50px">
+</div>
+<div class="book-page book-back">
+<p style="font-size:12px">whispers your name, Khushi 💕</p>
+</div>
+</div>
+</div>
+</div>
+<p style="margin-top:20px; font-size:14px; opacity:0.7">softly… endlessly…</p>
+</section>
+​<section id="sec-3">
+<div class="multi-grid triple-grid">
+<div class="book-container small-book" onclick="checkTriple(this)">
+<div class="book">
+<div class="book-page book-front"><img src="hug.gif" style="width:40px"></div>
+<div class="book-page book-back"><p style="font-size:11px">Safe in your arms</p></div>
+</div>
+</div>
+<div class="book-container small-book" onclick="checkTriple(this)">
+<div class="book">
+<div class="book-page book-front"><img src="kiss.gif" style="width:40px"></div>
+<div class="book-page book-back"><p style="font-size:11px">Warmth of your soul</p></div>
+</div>
+</div>
+<div class="book-container small-book" onclick="checkTriple(this)">
+<div class="book">
+<div class="book-page book-front"><img src="cute.gif" style="width:40px"></div>
+<div class="book-page book-back"><p style="font-size:11px">My favorite person</p></div>
+</div>
+</div>
+</div>
+</section>
+​<section id="sec-4">
+<div class="book-container" onclick="openBook(this, 5)">
+<div class="book">
+<div class="book-page book-front">
+<img src="promise.gif" class="gif-img">
+<p>A Promise? 💍</p>
+</div>
+<div class="book-page book-back">
+<p><b>Khushi 💖</b>
+
+Not just today, I choose you… Every single day 🌹</p>
+</div>
+</div>
+</div>
+</section>
+​<section id="sec-final">
+<div class="glass-card">
+<img src="endlove.gif" class="gif-img">
+<h1>Will you stay with me forever, Khushi? 💖</h1>
+<p style="font-style: italic; opacity: 0.8;">You are my always & forever.</p>
+</div>
+</section>
+​<audio id="bgMusic" loop>
+<source src="tere-liye.mp3" type="audio/mpeg">
+</audio>
+​<script>
+const bgLayer = document.getElementById('bg-layer');
+const bgMusic = document.getElementById('bgMusic');
+const video = document.getElementById('loveVideo');
+const videoCont = document.getElementById('video-container');
+​function createElements() {
+for(let i=0; i<15; i++) {
+const heart = document.createElement('div');
+heart.className = 'heart';
+heart.innerHTML = '💖';
+heart.style.left = Math.random() * 100 + 'vw';
+heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+heart.style.animationDelay = (Math.random() * 5) + 's';
+bgLayer.appendChild(heart);
+}
+for(let i=0; i<6; i++) {
+const bf = document.createElement('div');
+bf.className = 'butterfly';
+bf.innerHTML = '🦋';
+bf.style.animationDuration = (Math.random() * 5 + 8) + 's';
+bf.style.animationDelay = (Math.random() * 10) + 's';
+bgLayer.appendChild(bf);
+}
+}
+createElements();
+​function startJourney() {
+bgMusic.volume = 0.35;
+bgMusic.play();
+hideSection('sec-intro');
+videoCont.style.display = 'block';
+bgMusic.pause();
+video.play();
+}
+​video.onended = () => {
+videoCont.style.opacity = '0';
+setTimeout(() => {
+videoCont.style.display = 'none';
+bgMusic.play();
+showSection('sec-1');
+}, 1000);
+};
+​function showSection(id) {
+const el = document.getElementById(id);
+el.style.display = 'flex';
+}
+​function hideSection(id) {
+const el = document.getElementById(id);
+el.style.opacity = '0';
+setTimeout(() => { el.style.display = 'none'; }, 1000);
+}
+​function openBook(el, nextSecNum) {
+const book = el.querySelector('.book');
+if(!book.classList.contains('open')) {
+book.classList.add('open');
+setTimeout(() => {
+hideSection(el.parentElement.id);
+const nextId = nextSecNum === 5 ? 'sec-final' : 'sec-' + nextSecNum;
+setTimeout(() => {
+showSection(nextId);
+if(nextId === 'sec-final') slowDownAnimations();
+}, 1000);
+}, 3500);
+}
+}
+​let doubleCount = 0;
+function checkDouble(el) {
+const book = el.querySelector('.book');
+if(!book.classList.contains('open')) {
+book.classList.add('open');
+doubleCount++;
+if(doubleCount === 2) {
+setTimeout(() => {
+hideSection('sec-2');
+setTimeout(() => showSection('sec-3'), 1000);
+}, 3500);
+}
+}
+}
+​let tripleCount = 0;
+function checkTriple(el) {
+const book = el.querySelector('.book');
+if(!book.classList.contains('open')) {
+book.classList.add('open');
+tripleCount++;
+if(tripleCount === 3) {
+setTimeout(() => {
+hideSection('sec-3');
+setTimeout(() => showSection('sec-4'), 1000);
+}, 3500);
+}
+}
+}
+​function toggleMute() {
+bgMusic.muted = !bgMusic.muted;
+}
+​function slowDownAnimations() {
+document.querySelectorAll('.butterfly').forEach(b => b.style.animationDuration = '20s');
+for(let i=0; i<30; i++) {
+const heart = document.createElement('div');
+heart.className = 'heart';
+heart.innerHTML = '💖';
+heart.style.left = Math.random() * 100 + 'vw';
+heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+bgLayer.appendChild(heart);
+}
+}
+</script>
+​</body>
+                                                    </html>
