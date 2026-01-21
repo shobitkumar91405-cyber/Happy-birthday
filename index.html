@@ -8,8 +8,10 @@
         :root {
             --neon-pink: #ff2d75;
             --neon-purple: #bc13fe;
+            --neon-blue: #00f2ff;
             --bg-dark: #050505;
             --glass: rgba(255, 255, 255, 0.08);
+            --text-glow: 0 0 8px var(--neon-pink), 0 0 15px var(--neon-purple);
         }
 
         * {
@@ -26,14 +28,12 @@
             overflow: hidden;
             height: 100vh;
             width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
         .header-credit {
             position: fixed;
@@ -58,8 +58,10 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--neon-pink);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--neon-pink);
+            box-shadow: var(--text-glow);
         }
+
+        #music-icon { font-size: 20px; }
 
         .page {
             position: absolute;
@@ -92,17 +94,19 @@
             width: 100%;
             max-width: 360px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            transform: scale(0.9);
+            transform: scale(0.8); /* Initial smaller size */
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
 
-        .active .glass-card {
-            transform: scale(1);
+        .glass-card.expanded {
+            transform: scale(1); /* Expanded size */
+            cursor: default;
         }
 
         .neon-text {
             color: #fff;
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-purple);
+            text-shadow: var(--text-glow);
             margin-bottom: 10px;
         }
 
@@ -117,6 +121,7 @@
             letter-spacing: 1px;
             cursor: pointer;
             box-shadow: 0 5px 20px rgba(255, 45, 117, 0.5);
+            font-size: 1rem;
         }
 
         #intro-video {
@@ -134,7 +139,7 @@
         /* NEON CHARACTER STYLES */
         .stage {
             width: 100%;
-            height: 250px;
+            height: 250px; /* Adjusted height for characters */
             position: relative;
             margin-bottom: 20px;
         }
@@ -142,34 +147,71 @@
         .character {
             position: absolute;
             bottom: 20px;
-            width: 80px;
-            height: 120px;
+            width: 90px; /* Slightly larger characters */
+            height: 140px;
         }
 
-        #boy {
-            left: -100px;
-            filter: drop-shadow(0 0 8px #00f2ff);
-        }
+        #boy { left: -100px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+        #girl { right: 40px; filter: drop-shadow(0 0 10px var(--neon-pink)); }
 
-        #girl {
-            right: 40px;
-            filter: drop-shadow(0 0 8px var(--neon-pink));
-        }
-
-        .stick-man { stroke-width: 4; fill: none; stroke-linecap: round; }
-        .boy-color { stroke: #00f2ff; }
+        .stick-man { stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .boy-color { stroke: var(--neon-blue); }
         .girl-color { stroke: var(--neon-pink); }
 
-        .kneel-anim {
-            transform: translateY(25px) scaleY(0.7);
-            transition: transform 1s ease;
+        /* Boy specific parts */
+        #boy-head { cx="50" cy="25" r="15"; }
+        #boy-body-path { d="M50 40 L50 90 M50 55 L25 80 M50 55 L75 80 M50 90 L30 130 M50 90 L70 130"; }
+
+        /* Girl specific parts */
+        #girl-head { cx="50" cy="25" r="15"; }
+        #girl-body-path { d="M50 40 L30 100 L70 100 Z M50 100 L40 140 M50 100 L60 140 M50 60 L25 85 M50 60 L75 85"; }
+
+        /* Rose styles */
+        .rose-color { fill: #e74c3c; stroke: #c0392b; stroke-width: 1.5; }
+        .stem-color { stroke: #27ae60; stroke-width: 2; }
+        .leaf-color { fill: #2ecc71; }
+
+        /* Animation classes */
+        .kneel-boy {
+            transform: translateY(20px) scaleY(0.9); /* Slight squat */
+            transition: transform 0.5s ease;
         }
+        .boy-hand-up {
+            transform: rotate(-30deg) translate(5px, -5px);
+            transition: transform 0.5s ease;
+            transform-origin: 75px 80px; /* Rotate around the elbow */
+        }
+
+        #proposal-text {
+            position: absolute;
+            top: 15%; /* Positioned higher */
+            width: 100%;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-purple), 0 0 30px var(--neon-pink);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 1.5s all ease-out;
+            z-index: 1;
+        }
+
+        .show-proposal-text { opacity: 1 !important; transform: translateY(0) !important; }
 
         .message-text {
             font-size: 1.05rem;
             line-height: 1.6;
             color: #f0f0f0;
             font-style: italic;
+            opacity: 0; /* Hidden by default */
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+        }
+        .message-text.visible {
+            opacity: 1;
+            max-height: 200px; /* Adjust as needed to fit content */
         }
 
         .gif-frame {
@@ -179,6 +221,7 @@
             margin: 0 auto 15px;
             display: block;
             border: 2px solid var(--neon-purple);
+            object-fit: cover;
         }
 
         .heart-fly {
@@ -186,17 +229,37 @@
             pointer-events: none;
             z-index: 9999;
             animation: moveUp 3s linear forwards;
+            font-size: 25px; /* Larger hearts */
         }
 
         @keyframes moveUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
         }
+
+        /* Styles for heart burst from center */
+        .center-heart-burst {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            animation: burstOut 1.5s ease-out forwards;
+            font-size: 0; /* Starts hidden */
+            opacity: 0;
+        }
+
+        @keyframes burstOut {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-credit">Made by sivasingh 💖</div>
+    <div class="header-credit">Made with 💖 for Pallavi</div>
     <canvas id="bg-canvas"></canvas>
     <video id="intro-video" playsinline></video>
 
@@ -206,88 +269,104 @@
 
     <audio id="bg-music" loop>
         <source src="tere-liye.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
 
     <div class="page active" id="p1">
-        <div class="glass-card">
-            <img src="intro.gif" class="gif-frame">
+        <div class="glass-card" onclick="initiate()">
+            <img src="intro.gif" class="gif-frame" alt="Introduction GIF">
             <h1 class="neon-text">Hey Pallavi 💖</h1>
-            <p>A moment that comes straight from my heart...</p>
-            <button class="btn-continue" onclick="initiate()">Continue 💌</button>
+            <p style="color:rgba(255,255,255,0.8);">A moment that comes straight from my heart...</p>
+            <button class="btn-continue">Continue 💌</button>
         </div>
     </div>
 
     <div class="page" id="p3">
+        <div id="proposal-text">I Love You Pallavi! 💖</div>
         <div class="stage">
             <div id="boy" class="character">
                 <svg viewBox="0 0 100 150">
-                    <circle class="stick-man boy-color" cx="50" cy="25" r="15"/>
-                    <path class="stick-man boy-color" d="M50 40 L50 90 M50 55 L25 80 M50 55 L75 80 M50 90 L30 130 M50 90 L70 130" id="boy-body"/>
+                    <circle class="stick-man boy-color" id="boy-head"/>
+                    <g id="boy-body-group">
+                        <path class="stick-man boy-color" id="boy-body-path"/>
+                        <g id="boy-rose-hand">
+                            <line class="stick-man boy-color" x1="75" y1="80" x2="85" y2="70"/>
+                            <path class="rose-color" d="M88 65 C90 60, 95 62, 90 68 C88 72, 83 70, 85 65 Z M85 65 C83 60, 78 62, 80 68 C82 72, 87 70, 85 65 Z"/>
+                            <line class="stem-color" x1="88" y1="65" x2="95" y2="55"/>
+                            <path class="leaf-color" d="M95 55 L90 50 L98 52 Z"/>
+                        </g>
+                    </g>
                 </svg>
             </div>
             <div id="girl" class="character">
                 <svg viewBox="0 0 100 150">
-                    <circle class="stick-man girl-color" cx="50" cy="25" r="15"/>
-                    <path class="stick-man girl-color" d="M50 40 L30 100 L70 100 Z M50 100 L40 140 M50 100 L60 140 M50 60 L25 85 M50 60 L75 85"/>
+                    <circle class="stick-man girl-color" id="girl-head"/>
+                    <g id="girl-body-group">
+                        <path class="stick-man girl-color" id="girl-body-path"/>
+                        <g id="girl-rose-hand" style="opacity:0; transition: opacity 0.5s;">
+                            <line class="stick-man girl-color" x1="25" y1="85" x2="15" y2="75"/>
+                            <path class="rose-color" d="M12 70 C10 65, 5 67, 10 73 C12 77, 17 75, 15 70 Z M15 70 C17 65, 22 67, 20 73 C18 77, 13 75, 15 70 Z"/>
+                            <line class="stem-color" x1="12" y1="70" x2="5" y2="60"/>
+                            <path class="leaf-color" d="M5 60 L10 55 L2 57 Z"/>
+                        </g>
+                    </g>
                 </svg>
             </div>
         </div>
-        <div id="prop-box" style="opacity:0; transition: 1s;">
-             <div class="glass-card">
-                <h2 class="neon-text">Pallavi...</h2>
-                <p>I want to spend every sunrise and sunset of my life with you. Will you be mine forever?</p>
-                <button class="btn-continue" onclick="nextPage()">YES 💖</button>
-             </div>
+        <div id="prop-box" class="glass-card" style="opacity:0; transition: 1s; cursor: default;">
+            <h2 class="neon-text">Pallavi...</h2>
+            <p style="color:rgba(255,255,255,0.8);">I want to spend every sunrise and sunset of my life with you. Will you be mine forever?</p>
+            <button class="btn-continue" onclick="acceptRose()">YES 💖</button>
         </div>
     </div>
 
-    <div class="page" id="p4" onclick="nextPage()">
-        <div class="glass-card">
-            <img src="rose.gif" class="gif-frame">
+    <div class="page" id="p4">
+        <div class="glass-card" onclick="toggleCardAndNext(this, 'p5')">
+            <img src="rose.gif" class="gif-frame" alt="Rose GIF">
             <p class="message-text">Pallavi, you are the most beautiful soul I have ever known. Your kindness and grace inspire me every single day. Being with you feels like home, a place where I can truly be myself and find peace in your warm embrace.</p>
         </div>
     </div>
 
-    <div class="page" id="p5" onclick="nextPage()">
-        <div class="glass-card">
-            <div style="display:flex; justify-content:center; gap:10px;">
-                <img src="heart1.gif" style="width:70px; border-radius:10px;">
-                <img src="heart2.gif" style="width:70px; border-radius:10px;">
+    <div class="page" id="p5">
+        <div class="glass-card" onclick="toggleCardAndNext(this, 'p6')">
+            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:15px;">
+                <img src="heart1.gif" style="width:70px; border-radius:10px;" alt="Heart 1">
+                <img src="heart2.gif" style="width:70px; border-radius:10px;" alt="Heart 2">
             </div>
             <p class="message-text">Every heartbeat of mine whispers your name, Pallavi. I promise to protect your smile and cherish your dreams as if they were my own. Life's journey is only worth traveling if you are the one walking beside me, holding my hand.</p>
         </div>
     </div>
 
-    <div class="page" id="p6" onclick="nextPage()">
-        <div class="glass-card">
+    <div class="page" id="p6">
+        <div class="glass-card" onclick="toggleCardAndNext(this, 'p7')">
             <div style="display:flex; justify-content:center; gap:5px; margin-bottom:15px;">
-                <img src="hug.gif" style="width:60px;">
-                <img src="kiss.gif" style="width:60px;">
-                <img src="cute.gif" style="width:60px;">
+                <img src="hug.gif" style="width:60px;" alt="Hug GIF">
+                <img src="kiss.gif" style="width:60px;" alt="Kiss GIF">
+                <img src="cute.gif" style="width:60px;" alt="Cute GIF">
             </div>
             <p class="message-text">I want to be your anchor in every storm and your biggest fan in every victory, Pallavi. You aren't just my love; you are my best friend and my entire world. Thank you for making my life so incredibly meaningful and full of joy.</p>
         </div>
     </div>
 
-    <div class="page" id="p7" onclick="nextPage()">
-        <div class="glass-card">
-            <img src="promise.gif" class="gif-frame">
+    <div class="page" id="p7">
+        <div class="glass-card" onclick="toggleCardAndNext(this, 'p8')">
+            <img src="promise.gif" class="gif-frame" alt="Promise GIF">
             <p class="message-text">Pallavi, I promise to choose you every single day, without a doubt, in a heartbeat. I look forward to building a beautiful future together, filled with laughter, deep conversations, and a love that only grows stronger with time.</p>
         </div>
     </div>
 
     <div class="page" id="p8">
-        <div class="glass-card">
-            <img src="endlove.gif" class="gif-frame">
+        <div class="glass-card" onclick="spawnCenterHearts();"> <img src="endlove.gif" class="gif-frame" alt="Ending Love GIF">
             <h2 class="neon-text">Always & Forever</h2>
-            <p class="message-text">Pallavi, you are my heart's final destination. I love you more than words could ever express, and I am so blessed to have you in my life. This is just the beginning of our forever. I love you! 💖</p>
+            <p class="message-text visible" style="max-height: fit-content; opacity:1;">Pallavi, you are my heart's final destination. I love you more than words could ever express, and I am so blessed to have you in my life. This is just the beginning of our forever. I love you! 💖</p>
         </div>
     </div>
 
     <script>
         const music = document.getElementById('bg-music');
         const video = document.getElementById('intro-video');
-        let current = 1;
+        let current = 1; // Current page number
+        let cardExpanded = false; // To track if the message card is expanded
 
         // Background Particles
         const canvas = document.getElementById('bg-canvas');
@@ -338,6 +417,40 @@
             }
         }
 
+        function spawnCenterHearts() {
+            const burstContainer = document.createElement('div');
+            burstContainer.className = 'center-heart-burst';
+            document.body.appendChild(burstContainer);
+
+            for(let i = 0; i < 30; i++) {
+                const heart = document.createElement('span');
+                heart.innerHTML = '💖';
+                heart.style.position = 'absolute';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+                heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+                heart.style.opacity = '1';
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 150 + 50; // Random distance
+                const finalX = distance * Math.cos(angle);
+                const finalY = distance * Math.sin(angle);
+
+                heart.animate([
+                    { transform: `translate(-50%, -50%) scale(0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) scale(1) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out',
+                    delay: Math.random() * 200
+                });
+                burstContainer.appendChild(heart);
+            }
+
+            setTimeout(() => burstContainer.remove(), 2000);
+        }
+
         function initiate() {
             music.volume = 0.35;
             music.play();
@@ -345,7 +458,7 @@
             
             // Video Page Logic
             video.style.display = 'block';
-            video.src = 'intro-love.mp4';
+            video.src = 'intro-love.mp4'; // Make sure this path is correct
             music.pause();
             video.play();
             
@@ -357,29 +470,82 @@
                     startProposal();
                 }, 800);
             };
+            spawnHearts();
         }
 
         function startProposal() {
             document.getElementById('p3').classList.add('active');
             const boy = document.getElementById('boy');
+            const boyBodyGroup = document.getElementById('boy-body-group');
+            const boyRoseHand = document.getElementById('boy-rose-hand');
+
+            // 1. Boy walks to Girl
             setTimeout(() => {
-                boy.style.transition = "left 3s linear";
-                boy.style.left = "calc(100% - 160px)";
+                boy.style.transition = "left 3.5s linear";
+                boy.style.left = "calc(50% - 60px)"; // Position boy near girl
+                
+                // 2. Boy kneels down and raises hand with rose
                 setTimeout(() => {
-                    document.getElementById('boy-body').classList.add('kneel-anim');
+                    boyBodyGroup.classList.add('kneel-boy');
+                    boyRoseHand.classList.add('boy-hand-up');
                     spawnHearts();
-                    document.getElementById('prop-box').style.opacity = '1';
-                }, 3200);
+                    
+                    setTimeout(() => {
+                        document.getElementById('prop-box').style.opacity = '1';
+                    }, 800);
+                }, 3600); // After walking animation ends
             }, 500);
         }
 
-        function nextPage() {
-            document.querySelector('.page.active').classList.remove('active');
-            current++;
-            if(current < 3) current = 4; // Skip video/prop logic if handled
-            const next = document.getElementById('p' + (current > 8 ? 8 : current));
-            next.classList.add('active');
-            spawnHearts();
+        function acceptRose() {
+            // Hide boy's rose, show girl's rose
+            document.getElementById('boy-rose-hand').style.opacity = '0';
+            document.getElementById('girl-rose-hand').style.opacity = '1';
+            
+            // Show "I Love You Pallavi"
+            document.getElementById('proposal-text').classList.add('show-proposal-text');
+            
+            // Hide the button box
+            document.getElementById('prop-box').style.opacity = '0';
+            
+            // Effects
+            spawnCenterHearts();
+            setInterval(spawnHearts, 1000); // Keep hearts flying
+
+            // After a delay, move to the next page automatically
+            setTimeout(() => {
+                document.getElementById('p3').classList.remove('active');
+                current = 4;
+                document.getElementById('p' + current).classList.add('active');
+                spawnHearts();
+            }, 3000); // Wait for the text to show and hearts to burst
+        }
+
+        function toggleCardAndNext(cardElement, nextPageId) {
+            const messageText = cardElement.querySelector('.message-text');
+
+            if (!cardElement.classList.contains('expanded')) {
+                // Expand the card
+                cardElement.classList.add('expanded');
+                if (messageText) {
+                    messageText.classList.add('visible');
+                }
+                spawnCenterHearts(); // Burst hearts when card expands
+                cardExpanded = true;
+            } else {
+                // Move to the next page
+                document.querySelector('.page.active').classList.remove('active');
+                const next = document.getElementById(nextPageId);
+                if (next) {
+                    next.classList.add('active');
+                    current++;
+                    spawnHearts();
+                    cardExpanded = false; // Reset for the next card
+                } else {
+                    // This is the last page, maybe do something else or just keep it active
+                    console.log("End of pages.");
+                }
+            }
         }
     </script>
 </body>
