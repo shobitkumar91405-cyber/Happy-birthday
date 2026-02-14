@@ -3,67 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Valentine's Day, Khushi! 💖</title>
+    <title>I'm So Sorry, Khushi! 😿💔</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            transition: background 1s ease;
+            overflow: hidden;
+            transition: background 2s ease;
+            background: linear-gradient(to bottom, #E6E6FA, #DDA0DD); /* Initial soft lavender-purple */
         }
-        .day { background: linear-gradient(to bottom, #87CEEB, #FFD700); }
-        .night { background: linear-gradient(to bottom, #191970, #000000); }
-        section {
+        .night { background: linear-gradient(to bottom, #2E003E, #000000); } /* Override for night mode */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
+            position: relative;
+        }
+        .card {
+            width: 90%;
+            max-width: 500px;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(138,43,226,0.5);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
+            cursor: pointer;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
             position: relative;
+            overflow: hidden;
         }
+        .card:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(138,43,226,0.7); }
+        .card.closed .content { display: none; }
+        .card.open .teaser { display: none; }
+        .teaser {
+            font-size: 1.5em;
+            color: #8A2BE2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .content {
+            animation: fadeIn 1s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         .message {
-            font-size: 2em;
-            color: #FF69B4;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 1.6em;
+            color: #DC143C;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.5;
         }
-        .gif {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255,105,180,0.5);
-        }
-        .photo {
-            width: 400px;
+        .gif, .photo {
+            width: 100%;
+            max-width: 300px;
             height: auto;
             border-radius: 15px;
-            margin: 20px;
-            box-shadow: 0 0 30px rgba(255,20,147,0.7);
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(138,43,226,0.5);
         }
         .bulbs {
             position: absolute;
-            top: 10%;
-            left: 10%;
-            right: 10%;
+            top: 5%;
+            left: 5%;
+            right: 5%;
             display: flex;
             justify-content: space-around;
-            animation: colorChange 3s infinite;
+            animation: colorChange 4s infinite;
         }
         .bulb {
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle, #FFF, #FF69B4);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #FFF, #8A2BE2);
             border-radius: 50%;
-            box-shadow: 0 0 20px #FF69B4;
+            box-shadow: 0 0 15px #8A2BE2;
         }
         @keyframes colorChange {
-            0% { background: radial-gradient(circle, #FFF, #FF69B4); box-shadow: 0 0 20px #FF69B4; }
-            33% { background: radial-gradient(circle, #FFF, #00FF7F); box-shadow: 0 0 20px #00FF7F; }
-            66% { background: radial-gradient(circle, #FFF, #FFD700); box-shadow: 0 0 20px #FFD700; }
-            100% { background: radial-gradient(circle, #FFF, #FF69B4); box-shadow: 0 0 20px #FF69B4; }
+            0% { background: radial-gradient(circle, #FFF, #8A2BE2); box-shadow: 0 0 15px #8A2BE2; }
+            25% { background: radial-gradient(circle, #FFF, #6495ED); box-shadow: 0 0 15px #6495ED; }
+            50% { background: radial-gradient(circle, #FFF, #DDA0DD); box-shadow: 0 0 15px #DDA0DD; }
+            75% { background: radial-gradient(circle, #FFF, #FF69B4); box-shadow: 0 0 15px #FF69B4; }
+            100% { background: radial-gradient(circle, #FFF, #8A2BE2); box-shadow: 0 0 15px #8A2BE2; }
         }
         .hearts {
             position: absolute;
@@ -78,11 +102,12 @@
             position: absolute;
             color: #FF1493;
             font-size: 2em;
-            animation: float 10s linear infinite;
+            animation: floatPulse 8s linear infinite;
         }
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
+        @keyframes floatPulse {
+            0% { transform: translateY(100vh) rotate(0deg) scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: translateY(-100px) rotate(360deg) scale(1); }
         }
         .rain {
             position: absolute;
@@ -98,7 +123,7 @@
             width: 2px;
             height: 20px;
             background: #87CEEB;
-            animation: fall 2s linear infinite;
+            animation: fall 3s linear infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-100px); }
@@ -108,7 +133,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #FF69B4;
+            background: #8A2BE2;
             color: white;
             border: none;
             padding: 10px;
@@ -123,120 +148,173 @@
             color: #FFF;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
+        .next-btn {
+            margin-top: 20px;
+            background: #FF69B4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background 0.3s ease;
+        }
+        .next-btn:hover { background: #DC143C; }
         audio { display: none; }
     </style>
 </head>
-<body class="day">
+<body>
     <button class="theme-toggle" onclick="toggleTheme()">🌙 Night / ☀️ Day</button>
     <div class="credits">Made by sivasingh | Instagram: @smass1708</div>
-    <audio id="romanticMusic" loop autoplay>
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav"> <!-- Placeholder romantic sound; replace with a free romantic track -->
+    <audio id="sorryMusic" loop autoplay>
+        <source src="https://www.soundjay.com/misc/sounds/soft-rain-01.wav" type="audio/wav"> <!-- Placeholder soft, reflective sound; replace with a free emotional song -->
     </audio>
 
-    <!-- Section 1: Welcome -->
-    <section>
-        <div class="bulbs">
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
+    <!-- Card 1: Welcome Apology -->
+    <div class="container" id="card1">
+        <div class="card closed" onclick="openCard(1)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts1"></div>
+            <div class="rain" id="rain1"></div>
+            <div class="teaser">Tap to Open My Heartfelt Apology 💔😿</div>
+            <div class="content">
+                <h1 class="message">I'm So Sorry, Khushi! 😿💔</h1>
+                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Crying Cat GIF" class="gif"> <!-- Crying cat GIF -->
+                <p class="message">Khushi, my dearest love, my heart aches like a kitten crying in the rain 😿. I never meant to hurt you, and every tear I imagine you shedding breaks me. Please know my regret is deeper than the ocean—let's heal this wound together. I love you more than words can say. 🌧️❤️</p>
+                <button class="next-btn" onclick="nextCard(1)">Next 😿</button>
+            </div>
         </div>
-        <div class="hearts" id="heartsContainer"></div>
-        <div class="rain" id="rainContainer"></div>
-        <h1 class="message">Happy Valentine's Day, My Love Khushi! 💕</h1>
-        <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Romantic GIF" class="gif">
-        <p class="message">Every moment with you is magical, like a dream from Studio Ghibli. I love you endlessly! 🌟</p>
-    </section>
+    </div>
 
-    <!-- Section 2: Messages -->
-    <section>
-        <div class="bulbs">
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
+    <!-- Card 2: Reason 1 -->
+    <div class="container" id="card2" style="display: none;">
+        <div class="card closed" onclick="openCard(2)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts2"></div>
+            <div class="rain" id="rain2"></div>
+            <div class="teaser">Tap for Reason 1 😿</div>
+            <div class="content">
+                <h2 class="message">Why I'm Sorry 😿</h2>
+                <img src="https://media.giphy.com/media/l4FGKbQG6x5QkJz6M/giphy.gif" alt="Sad Crying Cat GIF" class="gif"> <!-- Sad crying cat GIF -->
+                <p class="message">Khushi, I was foolish, like a scared little cat 😿 hiding in the shadows, too afraid to face my feelings. I let my pride win, and it cost us precious moments. My soul weeps for the pain I caused you—forgive my blindness, my love. I promise to see you clearly now. 😢🐱</p>
+                <button class="next-btn" onclick="nextCard(2)">Next 😿</button>
+            </div>
         </div>
-        <div class="hearts" id="heartsContainer2"></div>
-        <div class="rain" id="rainContainer2"></div>
-        <h2 class="message">Page 1: Our Story</h2>
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Ghibli Couple" class="photo"> <!-- Ghibli-inspired couple photo -->
-        <p class="message">Khushi, from the first day, you've been my Totoro in this big world—cute, adventurous, and full of wonder. I cherish every laugh we share! 🐾</p>
-    </section>
+    </div>
 
-    <!-- Section 3: More Messages -->
-    <section>
-        <div class="bulbs">
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
+    <!-- Card 3: Reason 2 -->
+    <div class="container" id="card3" style="display: none;">
+        <div class="card closed" onclick="openCard(3)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts3"></div>
+            <div class="rain" id="rain3"></div>
+            <div class="teaser">Tap for Reason 2 😿</div>
+            <div class="content">
+                <h2 class="message">My Biggest Mistake 😿</h2>
+                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Crying Kitten GIF" class="gif"> <!-- Crying kitten GIF -->
+                <p class="message">Oh Khushi, my biggest mistake was forgetting how fragile our bond is, like a kitten 😿 trembling in the cold. I took your love for granted, and now my heart is shattered. Every night, I cry thinking of your smile fading because of me. Please, let's mend this—your happiness is my everything. 💔🐾</p>
+                <button class="next-btn" onclick="nextCard(3)">Next 😿</button>
+            </div>
         </div>
-        <div class="hearts" id="heartsContainer3"></div>
-        <div class="rain" id="rainContainer3"></div>
-        <h2 class="message">Page 2: Forever Together</h2>
-        <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Floating Hearts GIF" class="gif">
-        <p class="message">In your eyes, I see our future—adventures like Spirited Away, love like Howl's Moving Castle. You're my everything, Khushi! ❤️</p>
-    </section>
+    </div>
 
-    <!-- Section 4: Final Message -->
-    <section>
-        <div class="bulbs">
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
-            <div class="bulb"></div>
+    <!-- Card 4: Promise -->
+    <div class="container" id="card4" style="display: none;">
+        <div class="card closed" onclick="openCard(4)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts4"></div>
+            <div class="rain" id="rain4"></div>
+            <div class="teaser">Tap for My Promise 😿</div>
+            <div class="content">
+                <h2 class="message">I Promise to Change 😿</h2>
+                <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Hopeful Crying Cat GIF" class="gif"> <!-- Hopeful crying cat GIF -->
+                <p class="message">Khushi, from this moment, I'll be the cat 😿 that curls up by your side, loyal and loving. No more mistakes—I'll cherish every second with you, listen to your heart, and make you laugh again. My tears of regret will turn to tears of joy. I vow to be your forever protector. 🌟❤️</p>
+                <button class="next-btn" onclick="nextCard(4)">Next 😿</button>
+            </div>
         </div>
-        <div class="hearts" id="heartsContainer4"></div>
-        <div class="rain" id="rainContainer4"></div>
-        <h2 class="message">Page 3: My Promise</h2>
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Romantic Couple" class="photo"> <!-- Another Ghibli-style photo -->
-        <p class="message">Khushi, let's make more memories. I love you more than words can say. Happy Valentine's Day! 💖🌹</p>
-        <button onclick="alert('I love you, Khushi! 💕')">Click for a Surprise Kiss!</button>
-    </section>
+    </div>
+
+    <!-- Card 5: Plea -->
+    <div class="container" id="card5" style="display: none;">
+        <div class="card closed" onclick="openCard(5)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts5"></div>
+            <div class="rain" id="rain5"></div>
+            <div class="teaser">Tap for My Plea 😿</div>
+            <div class="content">
+                <h2 class="message">Please Forgive Me 😿</h2>
+                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Begging Crying Cat GIF" class="gif"> <!-- Begging crying cat GIF -->
+                <p class="message">Khushi, please, with all my heart, forgive me 😿. Life without your warmth is unbearable—like a cat crying alone in the dark. I kneel before you, begging for your mercy. You're my light, my reason to smile. Give me a chance to prove my love anew. I can't live without you. 😭💕</p>
+                <button class="next-btn" onclick="nextCard(5)">Next 😿</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 6: Final Surprise -->
+    <div class="container" id="card6" style="display: none;">
+        <div class="card closed" onclick="openCard(6)">
+            <div class="bulbs">
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+                <div class="bulb"></div>
+            </div>
+            <div class="hearts" id="hearts6"></div>
+            <div class="rain" id="rain6"></div>
+            <div class="teaser">Tap for the Final Surprise 😿</div>
+            <div class="content">
+                <h2 class="message">Forever Yours 😿❤️</h2>
+                <img src="https://media.giphy.com/media/l4FGKbQG6x5QkJz6M/giphy.gif" alt="Happy Crying Cat GIF" class="gif"> <!-- Happy crying cat GIF -->
+                <p class="message">Khushi, let's start fresh, like kittens 😿 finding their way home. My tears of sorrow will become tears of happiness with you. I love you more than all the stars in the sky—will you forgive me and let our story continue? You're my everything, my forever. 💖🌈</p>
+                <button class="next-btn" onclick="finish()">Finish & Hug Me! 😿</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Theme Toggle
+        let currentCard = 1;
+        let themeIndex = 0;
+        const themes = [
+            'linear-gradient(to bottom, #E6E6FA, #DDA0DD)', // Lavender-purple
+            'linear-gradient(to bottom, #6495ED, #87CEEB)', // Blue for sadness
+            'linear-gradient(to bottom, #FF69B4, #FFB6C1)', // Pink for hope
+            'linear-gradient(to bottom, #DDA0DD, #E6E6FA)'  // Back to start
+        ];
+
         function toggleTheme() {
-            document.body.classList.toggle('day');
             document.body.classList.toggle('night');
         }
 
-        // Floating Hearts
-        function createHearts(containerId) {
-            const container = document.getElementById(containerId);
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(heart);
-            }
-        }
-        createHearts('heartsContainer');
-        createHearts('heartsContainer2');
-        createHearts('heartsContainer3');
-        createHearts('heartsContainer4');
-
-        // Rain Effect
-        function createRain(containerId) {
-            const container = document.getElementById(containerId);
-            for (let i = 0; i < 50; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'drop';
-                drop.style.left = Math.random() * 100 + '%';
-                drop.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(drop);
-            }
-        }
-        createRain('rainContainer');
-        createRain('rainContainer2');
-        createRain('rainContainer3');
-        createRain('rainContainer4');
-    </script>
-</body>
-</html>
+        function openCard(cardNum) {
+            const card = document.query
