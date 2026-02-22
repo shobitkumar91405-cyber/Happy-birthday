@@ -16,11 +16,22 @@
             overflow: hidden;
         }
 
-        /* Video Comp Container (Aspect Ratio 1080x1350 -> 4:5) */
+        /* Follow Handle Styling */
+        .follow-handle {
+            position: absolute;
+            top: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #ffb659;
+            z-index: 100;
+            text-transform: uppercase;
+        }
+
+        /* Video Comp Container */
         #comp-container {
             position: relative;
             width: 100%;
-            max-width: 400px; /* Mobile responsive base */
+            max-width: 400px;
             aspect-ratio: 4 / 5;
             background-color: #000;
             overflow: hidden;
@@ -45,7 +56,7 @@
             pointer-events: auto;
         }
 
-        /* Approximated Animation Classes */
+        /* Animations */
         .anim-scale-up { animation: scaleUp 4s cubic-bezier(0.0, 1.0, 0.35, 1.0) forwards; }
         .anim-slide-rotate { animation: slideRotate 6s ease-in-out forwards; }
         .anim-page-curl-sim { animation: pageCurlSim 4s cubic-bezier(0.66, 0.01, 0.39, 0.99) forwards; transform-origin: left center; }
@@ -61,7 +72,6 @@
             20% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
             100% { transform: translateY(-20%) rotate(5deg) scale(1.2); }
         }
-        /* CSS Approximation of Alight Motion's PageCurl */
         @keyframes pageCurlSim {
             0% { transform: rotateY(0deg) scale(1); opacity: 1; }
             50% { transform: rotateY(90deg) scale(1.1); opacity: 0.5; }
@@ -81,7 +91,7 @@
             background-size: cover;
             background-position: center;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(182, 89, 245, 0.5); /* Deepglow approx */
+            box-shadow: 0 0 20px rgba(182, 89, 245, 0.5);
         }
         .editable-text {
             position: absolute;
@@ -94,7 +104,7 @@
             text-align: center;
         }
 
-        /* UI Controls Overlay */
+        /* UI Controls */
         #ui-controls {
             margin-top: 20px;
             display: flex;
@@ -117,7 +127,7 @@
         }
         button:hover { background: #ff9800; }
         
-        /* Specific Scene Styling */
+        /* Scene Specifics */
         #scene1 .editable-text { bottom: 10%; color: #005cab; font-family: serif; }
         #scene2 .editable-text { top: 20%; color: #fff; }
         #scene3 .editable-text { color: #00ff00; transform: rotate(-15deg); }
@@ -125,6 +135,8 @@
     </style>
 </head>
 <body>
+
+    <div class="follow-handle">follow- @smss1708</div>
 
     <div id="comp-container">
         
@@ -150,9 +162,9 @@
             <div class="editable-text anim-scale-up" contenteditable="true" style="bottom: 30%; animation-delay: 0.5s;">Ye</div>
         </div>
 
-        <div id="scene5" class="scene" data-start="17216" data-end="18849">
+        <div id="scene5" class="scene" data-start="14400" data-end="60000"> 
             <div class="dynamic-image anim-pop-in" id="img-slot-5" style="border-radius: 50%;"></div>
-            <div class="editable-text anim-pop-in" contenteditable="true" style="bottom: 15%; font-size: 1.5rem; color: #00ff00;">EDITED BY MOHIT</div>
+            <div class="editable-text anim-pop-in" contenteditable="true" style="bottom: 15%; font-size: 1.5rem; color: #ffb659;">MODDED BY SIVASINGH</div>
         </div>
 
     </div>
@@ -165,7 +177,7 @@
         
         <label>Replace Images:</label>
         <input type="file" id="image-uploader" accept="image/*" multiple>
-        <small style="color: #aaa;">Upload multiple images to populate the animation. Click text in the player to edit it.</small>
+        <small style="color: #aaa;">Click text in the player to edit it.</small>
     </div>
 
     <script>
@@ -180,29 +192,23 @@
             let startTime = null;
             let animationFrameId = null;
             let isPlaying = false;
-            const TOTAL_DURATION = 18849; // From XML totalTime
+            
+            // Total loop time set to 60 seconds
+            const TOTAL_DURATION = 60000; 
 
-            // Handle Image Uploads to replace placeholders
             uploader.addEventListener('change', (e) => {
                 const files = e.target.files;
-                if (!files.length) return;
-
                 for (let i = 0; i < Math.min(files.length, imgSlots.length); i++) {
-                    const file = files[i];
                     const reader = new FileReader();
-                    reader.onload = (event) => {
-                        imgSlots[i].style.backgroundImage = `url(${event.target.result})`;
-                    };
-                    reader.readAsDataURL(file);
+                    reader.onload = (event) => { imgSlots[i].style.backgroundImage = `url(${event.target.result})`; };
+                    reader.readAsDataURL(files[i]);
                 }
             });
 
-            // Core Animation Loop (requestAnimationFrame)
             function tick(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
 
-                // Sync scenes based on XML timestamps
                 scenes.forEach(scene => {
                     const start = parseInt(scene.getAttribute('data-start'));
                     const end = parseInt(scene.getAttribute('data-end'));
@@ -210,11 +216,9 @@
                     if (elapsed >= start && elapsed <= end) {
                         if (!scene.classList.contains('active')) {
                             scene.classList.add('active');
-                            // Retrigger CSS animations for smooth playback
-                            const elements = scene.querySelectorAll('[class*="anim-"]');
-                            elements.forEach(el => {
+                            scene.querySelectorAll('[class*="anim-"]').forEach(el => {
                                 el.style.animation = 'none';
-                                el.offsetHeight; /* trigger reflow */
+                                el.offsetHeight; 
                                 el.style.animation = null; 
                             });
                         }
@@ -223,26 +227,25 @@
                     }
                 });
 
-                if (elapsed < TOTAL_DURATION && isPlaying) {
+                if (isPlaying) {
                     animationFrameId = requestAnimationFrame(tick);
-                } else if (elapsed >= TOTAL_DURATION) {
-                    isPlaying = false;
-                    playBtn.innerText = "▶ Replay";
                 }
             }
 
-            // Play / Pause controls
             playBtn.addEventListener('click', () => {
                 if (!isPlaying) {
                     isPlaying = true;
                     startTime = performance.now();
-                    audio.play().catch(e => console.log("Audio play prevented by browser policy", e));
+                    audio.play().catch(err => console.log("Audio Error:", err));
                     playBtn.innerText = "⏸ Playing...";
                     requestAnimationFrame(tick);
+                } else {
+                    isPlaying = false;
+                    audio.pause();
+                    playBtn.innerText = "▶ Resume";
                 }
             });
 
-            // Reset controls
             resetBtn.addEventListener('click', () => {
                 isPlaying = false;
                 cancelAnimationFrame(animationFrameId);
