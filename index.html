@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>for kriti </title>
+  <title>for kirti</title>
   <style>
     * {
       margin: 0;
@@ -94,16 +94,38 @@
 
     .balloon {
       position: absolute;
-      bottom: -80px;
-      font-size: 2.2rem;
+      bottom: -100px;
+      font-size: 2.4rem;
       pointer-events: none;
-      animation: rise 10s linear forwards;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      animation: riseAndPop 9s linear forwards;
+      text-align: center;
+      line-height: 1;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
     }
 
-    @keyframes rise {
-      to {
-        transform: translateY(-120vh) rotate(15deg);
+    .balloon span {
+      display: block;
+      font-size: 0.8rem;
+      margin-top: -10px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    @keyframes riseAndPop {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      80% {
+        transform: translateY(-90vh) scale(1.1);
+        opacity: 1;
+      }
+      90% {
+        transform: translateY(-100vh) scale(1.4);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(0.1);
         opacity: 0;
       }
     }
@@ -115,14 +137,14 @@
 </head>
 <body>
 
-  <div class="credit">made by @smss1708 for kriti ♡</div>
+  <div class="credit">made by @smss1708 for kirti ♡</div>
 
   <audio id="music" loop>
     <source src="tere-liye.mp3" type="audio/mpeg">
   </audio>
 
   <div id="p1" class="page active">
-    <h1>hi kriti 😊</h1>
+    <h1>hi kirti 😊</h1>
     <p class="small">i made this little thing just to make you smile</p>
     <button class="btn" onclick="next(1)">next →</button>
   </div>
@@ -146,7 +168,7 @@
   </div>
 
   <div id="p5" class="page">
-    <h1>nice meeting you kriti </h1>
+    <h1>nice meeting you kirti</h1>
     <p class="small">hope this made your day a little brighter ✨</p>
   </div>
 
@@ -168,23 +190,23 @@
         music.play().catch(() => {});
       }
 
-      // balloons only on page 2,3,4 when next is clicked
-      if (n >= 1 && n <= 4) {
-        createBalloons();
-      }
+      // balloons on every next click (they rise and pop)
+      createBalloons();
     }
 
     function createBalloons() {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 6; i++) {   // 6 balloons each time
         let b = document.createElement("div");
-        b.className = "kriti";
-        b.innerHTML = "🎈 suruchi";
-        b.style.left = (10 + Math.random() * 80) + "%";
-        b.style.animationDelay = (Math.random() * 2) + "s";
+        b.className = "balloon";
+        b.innerHTML = "🎈<span>kirti</span>";
+        b.style.left = (5 + Math.random() * 90) + "%";
+        b.style.animationDelay = (Math.random() * 1.5) + "s";
+        // random slight horizontal movement
+        b.style.animation = `riseAndPop ${7 + Math.random()*4}s linear forwards`;
         document.body.appendChild(b);
 
-        // remove after animation
-        setTimeout(() => b.remove(), 12000);
+        // clean up after animation
+        setTimeout(() => b.remove(), 14000);
       }
     }
   </script>
